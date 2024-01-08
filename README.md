@@ -18,7 +18,7 @@ A command interpreter to manipulate data without a visual interface (perfect for
 
 The first piece is to manipulate a powerful storage system. This storage engine
 will give us an abstraction between “My object” and “How they are stored and persisted”.
-This abstraction will also allow us to change the type of storage easily without updating all of your codebase.<br />
+This abstraction will also allow us to change the type of storage easily without updating all of our codebase.<br />
 
 The console will be a tool to validate this storage engine as the figure:
 
