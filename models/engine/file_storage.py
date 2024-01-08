@@ -3,6 +3,7 @@
 
 from json import loads, dumps
 
+
 class FileStorage:
     ''' FileStorage class.
 
@@ -24,20 +25,21 @@ class FileStorage:
         if not obj:
             return
         key = obj.__class__.__name__ + '.' + obj.id
-        FileStorage.__objects[key] = obj.to_dict()
+        FileStorage.__objects[key] = obj
 
     def save(self):
         '''Serializes __objects to the JSON file'''
         with open(FileStorage.__file_path, 'w', encoding='utf-8') as file:
-            file.write(dumps(FileStorage.__objects, indent=4))
+            file.write(dumps(FileStorage.__objects,
+                             default=lambda obj: obj.to_dict(), indent=4))
 
     def reload(self):
         '''Deserializes the JSON file to __objects'''
         try:
             with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
-                _dict = loads(file.read())
-                FileStorage.__objects = _dict
-#                for _, v in _dict.items():
-#                    print(imp.load_source('base_model', 'models/base_model.py').BaseModel())
-        except:
+                from models.base_model import BaseModel
+                cls = {'BaseModel': BaseModel}
+                for k, v in loads(file.read()).items():
+                    FileStorage.__objects[k] = cls[v['__class__']](**v)
+        except Exception:
             pass
