@@ -1,6 +1,7 @@
 # AirBnB clone - The console
 
-<b>The project aims to deploy a fully-fledged and sophisticated, yet simple, copy of the Airbnb website on our server.</b>
+<b>The project aims to deploy a fully-fledged and sophisticated, yet simple, copy of the [AirBnB](https://www.airbnb.com/)
+website on our server.</b>
 
 <figure>
     <img src="https://drive.google.com/uc?export=view&id=1sWCzpc7sIY0VCsEOpQDmJPS5q7weRhj-" alt="AirBnB fancy logo">
