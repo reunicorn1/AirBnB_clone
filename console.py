@@ -5,6 +5,12 @@ import cmd
 import shlex
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -14,7 +20,8 @@ class HBNBCommand(cmd.Cmd):
     interface.
     """
 
-    cls = {"BaseModel": BaseModel}
+    cls = {"BaseModel": BaseModel, "User": User, "State": State,
+           "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
 
     def __init__(self):
         super().__init__()
@@ -49,8 +56,8 @@ class HBNBCommand(cmd.Cmd):
         print(obj.id)
 
     def do_show(self, line):
-        """Prints the string representation of an instance based on the class
-        and id values
+        """Prints the string representation of an instance based
+        on the class and id values
         """
         line = line.split(" ")
         if not len(line[0]):
@@ -91,8 +98,8 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     def do_all(self, line):
-        """Prints all string representation of all instances based or not on
-        the class name
+        """Prints all string representation of all instances based or
+        not on the class name
         """
         line = line.split(" ")
         if len(line[0]) and line[0] not in self.cls:
@@ -102,12 +109,12 @@ class HBNBCommand(cmd.Cmd):
         if not len(line[0]):
             print(list(map(lambda x: str(x), obj_dict.values())))
             return
-        cls_list = [str(val) for key, val in obj_dict.items() if line[0] in key]
+        cls_list = [str(v) for k, v in obj_dict.items() if line[0] in k]
         print(cls_list)
 
     def do_update(self, line):
-        """Updates an instance based on the class name and id by adding or updating
-        attributes
+        """Updates an instance based on the class name and id by adding
+        or updating attributes
         """
         line = shlex.split(line)
         if not line:
@@ -135,8 +142,6 @@ class HBNBCommand(cmd.Cmd):
             type_attr = type(getattr(obj, line[2]))
             line[3] = type_attr(line[3])
         setattr(obj, line[2], line[3])
-
-
 
 
 if __name__ == '__main__':
