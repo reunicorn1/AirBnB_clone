@@ -110,7 +110,6 @@ class HBNBCommand(cmd.Cmd):
         attributes
         """
         line = shlex.split(line)
-        print(line)
         if not line:
             print("** class name missing **")
             return
