@@ -38,7 +38,9 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
                 from models.base_model import BaseModel
-                cls = {'BaseModel': BaseModel}
+                from models.user import User
+
+                cls = {'BaseModel': BaseModel, 'User': User}
                 for k, v in loads(file.read()).items():
                     FileStorage.__objects[k] = cls[v['__class__']](**v)
         except Exception:
