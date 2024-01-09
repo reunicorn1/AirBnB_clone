@@ -29,6 +29,7 @@ class FileStorage:
 
     def save(self):
         '''Serializes __objects to the JSON file'''
+
         with open(FileStorage.__file_path, 'w', encoding='utf-8') as file:
             file.write(dumps(FileStorage.__objects,
                              default=lambda obj: obj.to_dict()))
