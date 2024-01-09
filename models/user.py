@@ -8,10 +8,10 @@ class User(BaseModel):
     '''User class.
 
     Atrrs:
-        email: string
-        password: string
-        first_name: string
-        last_name: string
+        email(str):
+        password(str):
+        first_name(str):
+        last_name(str):
     '''
     email = ''
     password = ''

@@ -39,8 +39,18 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
                 from models.base_model import BaseModel
                 from models.user import User
+                from models.amenity import Amenity
+                from models.city import City
+                from models.place import Place
+                from models.review import Review
+                from models.state import State
 
-                cls = {'BaseModel': BaseModel, 'User': User}
+                cls = {
+                        'BaseModel': BaseModel, 'User': User,
+                        'Amenity': Amenity, 'City': City,
+                        'Place': Place, 'Review': Review,
+                        'State': State
+                      }
                 for k, v in loads(file.read()).items():
                     FileStorage.__objects[k] = cls[v['__class__']](**v)
         except Exception:
