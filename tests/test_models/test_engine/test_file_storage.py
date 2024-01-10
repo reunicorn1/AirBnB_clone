@@ -11,8 +11,8 @@ from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 import models
 
-class Test_instantiation(unittest.TestCase):
-    """This class definesunittests for the instantition of FileStorage class"""
+class Test_attributes(unittest.TestCase):
+    """This class defines unittests for the attributes of FileStorage class"""
 
     def test_type_path(self):
         """This function tests the type of __file_path attribute"""
@@ -60,7 +60,8 @@ class Test_creating_objs(unittest.TestCase):
         self.assertIs(type(objs["BaseModel.123456"]), BaseModel)
 
     def test_type_all(self):
-        """This function tests the type of the return value method all of FileStorage"""
+        """This function tests the type of the return value method all of
+        FileStorage"""
         self.assertIs(type(models.storage.all()), dict)
 
     def test_all_args(self):
