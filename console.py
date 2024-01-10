@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 '''Entry point of the command interpreter'''
 
+import re
 import cmd
 import shlex
 from models import storage
@@ -14,8 +15,7 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    """
-    class HBNBCommand which acts as the console of the AirBNB clone
+    """class HBNBCommand which acts as the console of the AirBNB clone
     which is a command interpreter to manipulate data without visual
     interface.
     """
@@ -26,6 +26,22 @@ class HBNBCommand(cmd.Cmd):
     def __init__(self):
         super().__init__()
         self.prompt = '(hbnb) '
+
+    def precmd(self, line):
+        """This function intervenes and rewrites the command or simply
+        just return it unchanged"""
+        cmds = [".all", ".count", ".show", ".destroy", ".update"]
+        regx = '(?<=\.)[^(]+|[aA-zZ]+(?=\.)|(?<=\(\"|\(\')[a-z0-9\-]+|(?<=\"|\')\w+|\d+'
+        if any(cmd in line for cmd in cmds):
+            dict_arg = re.search('\{.+\}', line)
+            if dict_arg:
+                mtch = re.findall('(?<=\.)[^(]+|[aA-zZ]+(?=\.)|(?<=\(\"|\(\')[a-z0-9\-]+', line)
+                mtch[0], mtch[1] = mtch[1], mtch[0]
+                return " ".join(mtch) + " " + dict_arg.group()
+            match = re.findall(regx, line)
+            match[0], match[1] = match[1], match[0]
+            return " ".join(match)
+        return line
 
     def emptyline(self):
         pass
@@ -137,11 +153,25 @@ class HBNBCommand(cmd.Cmd):
         if len(line) == 3:
             print("** value missing **")
             return
+        if re.search('\{.+:', line[2]) and re.search('.*\}$', line[-1]):
+            dict_arg = " ".join(line[2:])
+            list_arg = re.findall('[a-zA-Z0-9_-]+', dict_arg)
+            for i in range(0, len(list_arg), 2):
+                self.updating_obj(key, list_arg[i], list_arg[i + 1])
+            return
+        self.updating_obj(key, line[2], line[3])
+
+    @staticmethod
+    def updating_obj(key, name, value):
+        """This function takes care of updating a certain obj with a
+        new name and value"""
+        obj_dict = storage.all()
         obj = obj_dict[key]
-        if hasattr(obj, line[2]):
-            type_attr = type(getattr(obj, line[2]))
-            line[3] = type_attr(line[3])
-        setattr(obj, line[2], line[3])
+        if hasattr(obj, name):
+            type_attr = type(getattr(obj, name))
+            value = type_attr(value)
+        setattr(obj, name, value)
+        storage.save()
 
 
 if __name__ == '__main__':
