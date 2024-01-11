@@ -33,15 +33,23 @@ class HBNBCommand(cmd.Cmd):
         cmds = [".all", ".count", ".show", ".destroy", ".update"]
         regx = '(?<=\.)[^(]+|[aA-zZ]+(?=\.)|(?<=\(\"|\(\')[a-z0-9\-]+|(?<=\"|\')\w+|\d+'
         if any(cmd in line for cmd in cmds):
-            dict_arg = re.search('\{.+\}', line)
+            dict_arg = re.search('{.+}', line)
             if dict_arg:
                 mtch = re.findall('(?<=\.)[^(]+|[aA-zZ]+(?=\.)|(?<=\(\"|\(\')[a-z0-9\-]+', line)
-                mtch[0], mtch[1] = mtch[1], mtch[0]
-                return " ".join(mtch) + " " + dict_arg.group()
-            match = re.findall(regx, line)
-            match[0], match[1] = match[1], match[0]
-            return " ".join(match)
+                print(mtch)
+                keys = re.findall('\w+(?=\'*:|\"*:)', dict_arg.group())
+                vals = re.findall('[\w\s\'\"]+(?=\s*,|\s*})', dict_arg.group())
+                print(keys, vals)
+                for key, val in zip(keys, vals):
+                    print("{} {} {} {}".format(mtch[0], mtch[2], key, val))
+                    self.do_update("{} {} {}{}".format(mtch[0], mtch[2], key, val))
+                return ""
+            mtch = re.findall(regx, line)
+            mtch[0], mtch[1] = mtch[1], mtch[0]
+            print(" ".join(mtch))
+            return " ".join(mtch)
         return line
+
 
     def emptyline(self):
         pass
@@ -133,6 +141,7 @@ class HBNBCommand(cmd.Cmd):
         or updating attributes
         """
         line = shlex.split(line)
+        print(line)
         if not line:
             print("** class name missing **")
             return
@@ -153,24 +162,11 @@ class HBNBCommand(cmd.Cmd):
         if len(line) == 3:
             print("** value missing **")
             return
-        if re.search('\{.+:', line[2]) and re.search('.*\}$', line[-1]):
-            dict_arg = " ".join(line[2:])
-            list_arg = re.findall('[a-zA-Z0-9_-]+', dict_arg)
-            for i in range(0, len(list_arg), 2):
-                self.updating_obj(key, list_arg[i], list_arg[i + 1])
-            return
-        self.updating_obj(key, line[2], line[3])
-
-    @staticmethod
-    def updating_obj(key, name, value):
-        """This function takes care of updating a certain obj with a
-        new name and value"""
-        obj_dict = storage.all()
         obj = obj_dict[key]
-        if hasattr(obj, name):
-            type_attr = type(getattr(obj, name))
-            value = type_attr(value)
-        setattr(obj, name, value)
+        if hasattr(obj, line[2]):
+            type_attr = type(getattr(obj, line[2]))
+            line[3] = type_attr(line[3])
+        setattr(obj, line[2], line[3])
         storage.save()
 
 

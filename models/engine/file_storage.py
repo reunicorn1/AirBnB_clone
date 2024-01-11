@@ -32,7 +32,7 @@ class FileStorage:
 
         with open(FileStorage.__file_path, 'w', encoding='utf-8') as file:
             file.write(dumps(FileStorage.__objects,
-                             default=lambda obj: obj.to_dict()))
+                             default=lambda obj: obj.to_dict(), indent=4))
 
     def reload(self):
         '''Deserializes the JSON file to __objects'''
