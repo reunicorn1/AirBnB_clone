@@ -31,25 +31,28 @@ class HBNBCommand(cmd.Cmd):
         """This function intervenes and rewrites the command or simply
         just return it unchanged"""
         cmds = [".all", ".count", ".show", ".destroy", ".update"]
-        regx = '(?<=\.)[^(]+|[aA-zZ]+(?=\.)|(?<=\(\"|\(\')[a-z0-9\-]+|(?<=\"|\')\w+|\d+'
+        group1 = r'(?<=\.)[^(]+|[aA-zZ]+(?=\.)'
+        group2 = r'(?<=\(\"|\(\')[a-z0-9\-]+'
+        group3 = r'(?<=\"|\')[\w\s\d]+'
+        keys_group = r'\w+(?=\'*:|\"*:)'
+        vals_group = r'[\w\s\'\"]+(?=\s*,|\s*})'
+        regx = group1 + '|' + group2 + '|' + group3
         if any(cmd in line for cmd in cmds):
             dict_arg = re.search('{.+}', line)
             if dict_arg:
-                mtch = re.findall('(?<=\.)[^(]+|[aA-zZ]+(?=\.)|(?<=\(\"|\(\')[a-z0-9\-]+', line)
+                mtch = re.findall(group1 + '|' + group2, line)
                 print(mtch)
-                keys = re.findall('\w+(?=\'*:|\"*:)', dict_arg.group())
-                vals = re.findall('[\w\s\'\"]+(?=\s*,|\s*})', dict_arg.group())
-                print(keys, vals)
+                keys = re.findall(keys_group, dict_arg.group())
+                vals = re.findall(vals_group, dict_arg.group())
                 for key, val in zip(keys, vals):
-                    print("{} {} {} {}".format(mtch[0], mtch[2], key, val))
-                    self.do_update("{} {} {}{}".format(mtch[0], mtch[2], key, val))
+                    self.do_update("{} {} {}{}".
+                                   format(mtch[0], mtch[2], key, val))
                 return ""
             mtch = re.findall(regx, line)
             mtch[0], mtch[1] = mtch[1], mtch[0]
-            print(" ".join(mtch))
-            return " ".join(mtch)
+            return " ".join('"'+word+'"' if ' ' in word else word
+                            for word in mtch)
         return line
-
 
     def emptyline(self):
         pass
@@ -83,6 +86,7 @@ class HBNBCommand(cmd.Cmd):
         """Prints the string representation of an instance based
         on the class and id values
         """
+
         line = line.split(" ")
         if not len(line[0]):
             print("** class name missing **")
@@ -141,7 +145,6 @@ class HBNBCommand(cmd.Cmd):
         or updating attributes
         """
         line = shlex.split(line)
-        print(line)
         if not line:
             print("** class name missing **")
             return
