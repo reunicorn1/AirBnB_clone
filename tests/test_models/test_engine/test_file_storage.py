@@ -4,7 +4,6 @@ Unittest for the FileStorage Class
 """
 
 import unittest
-import json
 import datetime
 import os
 from models.engine.file_storage import FileStorage

@@ -5,7 +5,6 @@ Unittest for the Class "State"
 
 import unittest
 import time
-import os
 import datetime
 from models.state import State
 import models

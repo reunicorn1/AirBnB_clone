@@ -5,7 +5,6 @@ Unittest for the Class "User"
 
 import unittest
 import time
-import os
 import datetime
 from models.user import User
 import models
