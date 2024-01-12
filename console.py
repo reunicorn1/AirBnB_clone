@@ -4,6 +4,7 @@
 import re
 import cmd
 import shlex
+import sys
 from json import loads
 from models import storage
 from models.base_model import BaseModel
@@ -30,7 +31,11 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """This function intervenes and rewrites the command or simply
-        just return it unchanged"""
+        just return it unchanged
+        """
+        if not sys.stdin.isatty():
+            print()
+
         cmds = [".all", ".count", ".show", ".destroy", ".update"]
         group1 = r'(?<=\.)[^(]+|[aA-zZ]+(?=\.)'
         group2 = r'(?<=\(\"|\(\')[a-z0-9\-]+'
@@ -179,9 +184,14 @@ class HBNBCommand(cmd.Cmd):
         setattr(obj, line[2], line[3])
         storage.save()
 
-    def do_count(self):
-        ''' '''
-        pass
+    def do_count(self, line):
+        """Retrives the number of instances of a class"""
+        count = 0
+        obj_dict = storage.all()
+        for key in obj_dict:
+            if line in key:
+                count += 1
+        print(count)
 
 
 if __name__ == '__main__':
