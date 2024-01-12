@@ -19,8 +19,7 @@ from models.review import Review
 class HBNBCommand(cmd.Cmd):
     """class HBNBCommand which acts as the console of the AirBNB clone
     which is a command interpreter to manipulate data without visual
-    interface.
-    """
+    interface."""
 
     cls = {"BaseModel": BaseModel, "User": User, "State": State,
            "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
@@ -31,8 +30,7 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """This function intervenes and rewrites the command or simply
-        just return it unchanged
-        """
+        just return it unchanged"""
         if not sys.stdin.isatty():
             print()
 
@@ -63,24 +61,20 @@ class HBNBCommand(cmd.Cmd):
         return line
 
     def emptyline(self):
-        '''Handle empty line w/ no-op
-        '''
+        '''Handle empty line w/ no-op'''
         pass
 
-    def do_quit(self, _):
-        """Quit command to exit the program
-        """
+        def do_quit(self, _):
+        """Quit command to exit the program"""
         return True
 
     def do_EOF(self, _):
-        """End-of-file
-        """
+        """End-of-file"""
         return True
 
     def do_create(self, line):
         """Creates a new instance of the class provided, save it into
-        a JSON file, and prints the id
-        """
+        a JSON file, and prints the id"""
         line = line.split(" ")
         if not len(line[0]):
             print("** class name missing **")
@@ -93,9 +87,8 @@ class HBNBCommand(cmd.Cmd):
         print(obj.id)
 
     def do_show(self, line):
-        """Prints the string representation of an instance based
-        on the class and id values
-        """
+        """Prints the string representation of an instance based on
+        the class and id values"""
 
         line = line.split(" ")
         if not len(line[0]):
@@ -115,8 +108,7 @@ class HBNBCommand(cmd.Cmd):
         print(obj_dict[key])
 
     def do_destroy(self, line):
-        """Deletes an instance based on class name and id
-        """
+        """Deletes an instance based on class name and id"""
         line = line.split(" ")
         if not len(line[0]):
             print("** class name missing **")
@@ -137,8 +129,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """Prints all string representation of all instances based or
-        not on the class name
-        """
+        not on the class name"""
         line = line.split(" ")
         if len(line[0]) and line[0] not in self.cls:
             print("** class doesn't exist **")
@@ -152,8 +143,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Updates an instance based on the class name and id by adding
-        or updating attributes
-        """
+        or updating attributes"""
         line = shlex.split(line)
         if not line:
             print("** class name missing **")
