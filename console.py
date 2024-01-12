@@ -4,6 +4,7 @@
 import re
 import cmd
 import shlex
+from json import loads
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -34,27 +35,33 @@ class HBNBCommand(cmd.Cmd):
         group1 = r'(?<=\.)[^(]+|[aA-zZ]+(?=\.)'
         group2 = r'(?<=\(\"|\(\')[a-z0-9\-]+'
         group3 = r'(?<=\"|\')[\w\s\d]+'
-        keys_group = r'\w+(?=\'*:|\"*:)'
-        vals_group = r'[\w\s\'\"]+(?=\s*,|\s*})'
         regx = group1 + '|' + group2 + '|' + group3
         if any(cmd in line for cmd in cmds):
-            dict_arg = re.search('{.+}', line)
-            if dict_arg:
-                mtch = re.findall(group1 + '|' + group2, line)
-                print(mtch)
-                keys = re.findall(keys_group, dict_arg.group())
-                vals = re.findall(vals_group, dict_arg.group())
-                for key, val in zip(keys, vals):
-                    self.do_update("{} {} {}{}".
-                                   format(mtch[0], mtch[2], key, val))
-                return ""
-            mtch = re.findall(regx, line)
-            mtch[0], mtch[1] = mtch[1], mtch[0]
-            return " ".join('"'+word+'"' if ' ' in word else word
-                            for word in mtch)
+            _dict = re.search('{.+}', line)
+            if _dict:
+                try:
+                    dct = loads(_dict.group().replace("'", '"'))
+                    args = re.findall(group1 + '|' + group2, line)
+                    for k, v in dct.items():
+                        self.do_update('{} {} {} "{}"'.
+                                       format(args[0], args[2], k, v))
+                    return ''
+                except:
+                    args = re.findall(group1 + '|' + group2, line)
+                    args[0], args[1] = args[1], args[0]
+                    s = ' '.join(args)
+                    print(s)
+                    return s
+
+            args = re.findall(regx, line)
+            args[0], args[1] = args[1], args[0]
+            return ' '.join('"'+w+'"' if ' ' in w else w for w in args)
+
         return line
 
     def emptyline(self):
+        '''Handle empty line w/ no-op
+        '''
         pass
 
     def do_quit(self, _):
@@ -171,6 +178,10 @@ class HBNBCommand(cmd.Cmd):
             line[3] = type_attr(line[3])
         setattr(obj, line[2], line[3])
         storage.save()
+
+    def do_count(self):
+        ''' '''
+        pass
 
 
 if __name__ == '__main__':
