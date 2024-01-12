@@ -1,11 +1,10 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 Unittest for the Class "User"
 """
 
 import unittest
 import time
-import os
 import datetime
 from models.user import User
 import models
