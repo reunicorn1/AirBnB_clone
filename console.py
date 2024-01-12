@@ -5,7 +5,7 @@ import re
 import cmd
 import shlex
 import sys
-from json import loads
+import json
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -45,18 +45,16 @@ class HBNBCommand(cmd.Cmd):
             _dict = re.search('{.+}', line)
             if _dict:
                 try:
-                    dct = loads(_dict.group().replace("'", '"'))
+                    dct = json.loads(_dict.group().replace("'", '"'))
                     args = re.findall(group1 + '|' + group2, line)
                     for k, v in dct.items():
                         self.do_update('{} {} {} "{}"'.
                                        format(args[0], args[2], k, v))
                     return ''
-                except:
+                except json.JSONDecodeError:
                     args = re.findall(group1 + '|' + group2, line)
                     args[0], args[1] = args[1], args[0]
-                    s = ' '.join(args)
-                    print(s)
-                    return s
+                    return ' '.join(args)
 
             args = re.findall(regx, line)
             args[0], args[1] = args[1], args[0]
