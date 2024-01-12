@@ -3,16 +3,22 @@
 Unittest for the Class "Review"
 """
 
+import io
 import unittest
 import time
 import datetime
 import uuid
-from models.review import Review
 import models
+from unittest.mock import patch
+from models.review import Review
 
 
 class Test_Review(unittest.TestCase):
     '''Test Review class'''
+    def test_docstr(self):
+        '''Test class documentaion'''
+        self.assertTrue(len(Review.__doc__) > 2)
+
     def test_init(self):
         '''Test instances/cls attrs exists'''
         rev = Review()
@@ -78,6 +84,15 @@ class Test_Review(unittest.TestCase):
         self.assertEqual('Review', dct['__class__'])
         with self.assertRaises(TypeError):
             rev.to_dict({'id': '123'})
+            Review()
+
+    def test_str(self):
+        '''Test `Review` representaion'''
+        with patch('sys.stdout', new_callable=io.StringIO) as m_stdout:
+            rev = Review()
+            print(rev)
+            self.assertEqual(m_stdout.getvalue(),
+                             '[Review] ({}) {}\n'.format(rev.id, rev.__dict__))
 
 
 if __name__ == '__main__':
