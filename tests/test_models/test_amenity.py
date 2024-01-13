@@ -76,7 +76,7 @@ class Test_instantation(unittest.TestCase):
         """This function create a Amenity with kwargs"""
         tdy = datetime.datetime.today()
         amenity = Amenity(id="123456", created_at=tdy.isoformat(),
-                      updated_at=tdy.isoformat(), name="spa")
+                          updated_at=tdy.isoformat(), name="spa")
         self.assertEqual(amenity.id, "123456")
         self.assertEqual(amenity.created_at, tdy)
         self.assertEqual(amenity.updated_at, tdy)
@@ -86,7 +86,7 @@ class Test_instantation(unittest.TestCase):
         """This function creates a Amenity without args"""
         tdy = datetime.datetime.today()
         amenity = Amenity("7890", id="4567", created_at=tdy.isoformat(),
-                      updated_at=tdy.isoformat())
+                          updated_at=tdy.isoformat())
         self.assertEqual(amenity.id, "4567")
         self.assertEqual(amenity.created_at, tdy)
         self.assertEqual(amenity.updated_at, tdy)
@@ -130,7 +130,8 @@ class Test_save(unittest.TestCase):
         """This function tests saving into a JSOM file"""
         amenity = Amenity()
         amenity.save()
-        with open(models.storage._FileStorage__file_path, encoding="utf-8") as f:
+        with open(models.storage._FileStorage__file_path,
+                  encoding="utf-8") as f:
             self.assertIn("Amenity." + amenity.id, f.read())
 
 
@@ -168,7 +169,7 @@ class Test_to_dict(unittest.TestCase):
         """This function create a User with kwargs and tests its dict"""
         tdy = datetime.datetime.today()
         amenity = Amenity(id="123456", created_at=tdy.isoformat(),
-                   updated_at=tdy.isoformat(), name="spa")
+                          updated_at=tdy.isoformat(), name="spa")
         amenity_dict = amenity.to_dict()
         self.assertIn('name', amenity_dict)
 
@@ -179,9 +180,9 @@ class Test_to_dict(unittest.TestCase):
         tdy = datetime.datetime.today()
         amenity.created_at = amenity.updated_at = tdy
         dict_amenity = {'__class__': 'Amenity',
-                      'updated_at': tdy.isoformat(),
-                      'created_at': tdy.isoformat(),
-                      'id': "123456"}
+                        'updated_at': tdy.isoformat(),
+                        'created_at': tdy.isoformat(),
+                        'id': "123456"}
         self.assertDictEqual(amenity.to_dict(), dict_amenity)
 
     def test_dict_class(self):

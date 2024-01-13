@@ -132,7 +132,8 @@ class Test_save(unittest.TestCase):
         """This function tests saving into a JSOM file"""
         state = State()
         state.save()
-        with open(models.storage._FileStorage__file_path, encoding="utf-8") as f:
+        with open(models.storage._FileStorage__file_path,
+                  encoding="utf-8") as f:
             self.assertIn("State." + state.id, f.read())
 
 
@@ -170,7 +171,7 @@ class Test_to_dict(unittest.TestCase):
         """This function create a User with kwargs and tests its dict"""
         tdy = datetime.datetime.today()
         state = State(id="123456", created_at=tdy.isoformat(),
-                   updated_at=tdy.isoformat(), name="florida")
+                      updated_at=tdy.isoformat(), name="florida")
         state_dict = state.to_dict()
         self.assertIn('name', state_dict)
 
