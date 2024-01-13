@@ -3,12 +3,9 @@
 Unittest for the Class "Amenity"
 """
 
-import io
 import unittest
 import datetime
-import uuid
 import models
-from unittest.mock import patch
 from models.amenity import Amenity
 
 
@@ -19,7 +16,6 @@ class Test_Amenity(unittest.TestCase):
     def test_uniq_time(self):
         """This function tests for the uniquenss of time creation"""
         amenity1 = Amenity()
-        time.sleep(0.001)
         amenity2 = Amenity()
         self.assertNotEqual(amenity1.created_at, amenity2.created_at)
 
