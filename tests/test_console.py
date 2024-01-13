@@ -15,7 +15,7 @@ class TestConsole_Base(unittest.TestCase):
 
     def test_prompt(self):
         """This function tests having the correct prompt"""
-        self.assertEqual("(hbnb) ", HBNBCommand().prompt)
+        self.assertEqual("(hbnb) ", HBNBCommand.prompt)
 
     def test_quit_return(self):
         """This function tests the return of onecmd function during quitting"""
