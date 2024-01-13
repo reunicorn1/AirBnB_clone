@@ -16,6 +16,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 class Test_attributes(unittest.TestCase):
     """This class defines unittests for the attributes of FileStorage class"""
 
@@ -37,6 +38,7 @@ class Test_attributes(unittest.TestCase):
         """This function tests the type of the instant storage"""
         self.assertIs(type(models.storage), FileStorage)
 
+
 class Test_creating_objs(unittest.TestCase):
     """This class creates objects and checks storage instance changes"""
 
@@ -57,9 +59,11 @@ class Test_creating_objs(unittest.TestCase):
         FileStorage._FileStorage__objects = {}
 
     def test_obj(self):
-        """This function tests the contents of __objects and __file_path"""
+        """This function tests the contents of __objects and
+        __file_path"""
         tdy = datetime.datetime.today()
-        base = BaseModel(id="123456", created_at=tdy.isoformat(), updated_at=tdy.isoformat())
+        base = BaseModel(id="123456", created_at=tdy.isoformat(),
+                         updated_at=tdy.isoformat())
         models.storage.new(base)
         base.save()
         self.assertTrue(os.path.exists("file.json"))
@@ -174,7 +178,6 @@ class Test_creating_objs(unittest.TestCase):
         """This function tests the method reload with no arguments"""
         with self.assertRaises(TypeError):
             models.storage.reload("args")
-
 
 
 if __name__ == '__main__':
