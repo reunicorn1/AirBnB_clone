@@ -32,7 +32,7 @@ class HBNBCommand(cmd.Cmd):
         """This function intervenes and rewrites the command or simply
         just return it unchanged"""
         # if not sys.stdin.isatty():
-        #     print()
+        #      print()
 
         cmds = [".all", ".count", ".show", ".destroy", ".update"]
         group1 = r'(?<=\.)[^(]+|[aA-zZ]+(?=\.)'
@@ -61,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
         return line
 
     def emptyline(self):
-        '''Handle empty line w/ no-op'''
+        """Handle empty line w/ no-op"""
         pass
 
     def do_quit(self, _):
