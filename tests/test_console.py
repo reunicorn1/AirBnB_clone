@@ -43,14 +43,14 @@ class TestConsole_Base(unittest.TestCase):
 
     def test_help(self):
         """This function tests the expected output of the command help"""
-        cmds = ('EOF', 'all', 'count', 'create', 'destroy',
-                'help', 'quit', 'show', 'update')
-        expected = ("Documented commands (type help <topic>):\n"
-                    "========================================\n"
+        cmds = ['EOF', 'all', 'count', 'create', 'destroy',
+                'help', 'quit', 'show', 'update']
+        expected = ("Documented commands (type help <topic>):\n",
+                    "========================================\n",
                     '  '.join(cmds))
-        # with patch('sys.stdout', new=StringIO()) as f:
-        #     self.assertFalse(HBNBCommand().onecmd("help"))
-        #     self.assertEqual(expected, f.getvalue().strip())
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("help"))
+            self.assertEqual(''.join(expected), f.getvalue().strip())
 
 
 if __name__ == '__main__':
