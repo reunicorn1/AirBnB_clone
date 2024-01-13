@@ -106,12 +106,12 @@ class Test_instantation(unittest.TestCase):
 
     def teat_init_class(self):
         """This function tests giving args a class key"""
-        usr = User()
-        dict_usr1 = base1.to_dict()
+        usr1 = User()
+        dict_usr1 = usr1.to_dict()
         dict_usr1['__class__'] = "BaseModel"
         usr2 = User(**dict_usr1)
         dict_usr2 = usr2.to_dict()
-        self.assertEqual(dict_base2['__class__'], "User")
+        self.assertEqual(dict_usr2['__class__'], "User")
 
 
 class Test_save(unittest.TestCase):
@@ -143,7 +143,7 @@ class Test_save(unittest.TestCase):
         """This function tests saving into a JSOM file"""
         usr = User()
         usr.save()
-        with open("file.json", encoding="utf-8") as f:
+        with open(models.storage._FileStorage__file_path, encoding="utf-8") as f:
             self.assertIn("User." + usr.id, f.read())
 
 

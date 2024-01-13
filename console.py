@@ -26,7 +26,7 @@ class HBNBCommand(cmd.Cmd):
 
     def __init__(self):
         super().__init__()
-        self.prompt = '(hbnb) '
+        HBNBCommand.prompt = '(hbnb) '
 
     def precmd(self, line):
         """This function intervenes and rewrites the command or simply
@@ -64,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
         '''Handle empty line w/ no-op'''
         pass
 
-        def do_quit(self, _):
+    def do_quit(self, _):
         """Quit command to exit the program"""
         return True
 

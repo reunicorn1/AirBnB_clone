@@ -24,6 +24,9 @@ class Test_attributes(unittest.TestCase):
         pack = FileStorage()
         self.assertIs(type(pack._FileStorage__file_path), str)
 
+    def test_path_value(self):
+        """This function tests the value of __file_path attr"""
+        self.assertEqual("file.json", models.storage._FileStorage__file_path)
 
     def test_type_objs(self):
         """This function tests the type of the attribute __objects"""
