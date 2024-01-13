@@ -53,10 +53,10 @@ class HBNBCommand(cmd.Cmd):
                         self.do_update('{} {} {} "{}"'.
                                        format(args[0], args[2], k, v))
                     return ''
-                except Exception:
-                    # args = re.findall(group1 + '|' + group2, line)
-                    # args[0], args[1] = args[1], args[0]
-                    return line
+                except json.JSONDecodeError:
+                    args = re.findall(group1 + '|' + group2, line)
+                    args[0], args[1] = args[1], args[0]
+                    return ' '.join(args)
 
             args = re.findall(regx, line)
             args[0], args[1] = args[1], args[0]
