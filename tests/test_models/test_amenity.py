@@ -85,9 +85,9 @@ class Test_Amenity(unittest.TestCase):
         '''Test `Amenity` representaion'''
         with patch('sys.stdout', new_callable=io.StringIO) as m_stdout:
             rev = Amenity()
-            print(rev)
+            print(rev, end='')
             self.assertEqual(m_stdout.getvalue(),
-                             '[Amenity] ({}) {}\n'.format(rev.id, rev.__dict__))
+                             '[Amenity] ({}) {}'.format(rev.id, rev.__dict__))
 
 
 if __name__ == '__main__':
