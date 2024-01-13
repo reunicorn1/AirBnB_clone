@@ -6,8 +6,8 @@ Unittest for the Class "State"
 import unittest
 import time
 import datetime
-from models.state import State
 import models
+from models.state import State
 
 
 class Test_state_attr(unittest.TestCase):
