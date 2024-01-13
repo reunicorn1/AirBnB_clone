@@ -19,7 +19,7 @@ from models.review import Review
 class HBNBCommand(cmd.Cmd):
     """class HBNBCommand which acts as the console of the AirBNB clone
     which is a command interpreter to manipulate data without visual
-    interface."""
+    interface"""
 
     cls = {"BaseModel": BaseModel, "User": User, "State": State,
            "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
