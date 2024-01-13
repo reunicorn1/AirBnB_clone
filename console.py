@@ -44,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         group3 = r'(?<=\"|\')[\w\s\d]+'
         regx = group1 + '|' + group2 + '|' + group3
         if any(cmd in line for cmd in cmds):
-            _dict = re.search('{.+}', line)
+            _dict = re.search(r'{.+}', line)
             if _dict:
                 try:
                     dct = json.loads(_dict.group().replace("'", '"'))
@@ -53,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
                         self.do_update('{} {} {} "{}"'.
                                        format(args[0], args[2], k, v))
                     return ''
-                except json.JSONDecodeError:
+                except Exception:
                     # args = re.findall(group1 + '|' + group2, line)
                     # args[0], args[1] = args[1], args[0]
                     return line
