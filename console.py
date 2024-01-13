@@ -19,7 +19,11 @@ from models.review import Review
 class HBNBCommand(cmd.Cmd):
     """class HBNBCommand which acts as the console of the AirBNB clone
     which is a command interpreter to manipulate data without visual
-    interface."""
+    interface.
+
+    Attrs:
+        cls(dcit): dictionary of all the instances.
+    """
 
     cls = {"BaseModel": BaseModel, "User": User, "State": State,
            "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
@@ -80,10 +84,10 @@ class HBNBCommand(cmd.Cmd):
         if not len(line[0]):
             print("** class name missing **")
             return
-        elif line[0] not in self.cls:
+        elif line[0] not in HBNBCommand.cls:
             print("** class doesn't exist **")
             return
-        obj = self.cls[line[0]]()
+        obj = HBNBCommand.cls[line[0]]()
         storage.save()
         print(obj.id)
 
