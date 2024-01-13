@@ -29,40 +29,40 @@ class HBNBCommand(cmd.Cmd):
         super().__init__()
         HBNBCommand.prompt = '(hbnb) '
 
-    def precmd(self, line):
-        """This function intervenes and rewrites the command or simply
-        just return it unchanged"""
-        # if not sys.stdin.isatty():
-        #      print()
+    # def precmd(self, line):
+    #     """This function intervenes and rewrites the command or simply
+    #     just return it unchanged"""
+    #     # if not sys.stdin.isatty():
+    #     #      print()
 
-        cmds = [".all", ".count", ".show", ".destroy", ".update"]
-        group1 = r'(?<=\.)[^(]+|[aA-zZ]+(?=\.)'
-        group2 = r'(?<=\(\"|\(\')[a-z0-9\-]+'
-        group3 = r'(?<=\"|\')[\w\s\d]+'
-        regx = group1 + '|' + group2 + '|' + group3
-        if any(cmd in line for cmd in cmds):
-            _dict = re.search('{.+}', line)
-            if _dict:
-                try:
-                    dct = json.loads(_dict.group().replace("'", '"'))
-                    args = re.findall(group1 + '|' + group2, line)
-                    for k, v in dct.items():
-                        self.do_update('{} {} {} "{}"'.
-                                       format(args[0], args[2], k, v))
-                    return ''
-                except json.JSONDecodeError:
-                    args = re.findall(group1 + '|' + group2, line)
-                    args[0], args[1] = args[1], args[0]
-                    return ' '.join(args)
+    #     cmds = [".all", ".count", ".show", ".destroy", ".update"]
+    #     group1 = r'(?<=\.)[^(]+|[aA-zZ]+(?=\.)'
+    #     group2 = r'(?<=\(\"|\(\')[a-z0-9\-]+'
+    #     group3 = r'(?<=\"|\')[\w\s\d]+'
+    #     regx = group1 + '|' + group2 + '|' + group3
+    #     if any(cmd in line for cmd in cmds):
+    #         _dict = re.search('{.+}', line)
+    #         if _dict:
+    #             try:
+    #                 dct = json.loads(_dict.group().replace("'", '"'))
+    #                 args = re.findall(group1 + '|' + group2, line)
+    #                 for k, v in dct.items():
+    #                     self.do_update('{} {} {} "{}"'.
+    #                                    format(args[0], args[2], k, v))
+    #                 return ''
+    #             except json.JSONDecodeError:
+    #                 args = re.findall(group1 + '|' + group2, line)
+    #                 args[0], args[1] = args[1], args[0]
+    #                 return ' '.join(args)
 
-            args = re.findall(regx, line)
-            args[0], args[1] = args[1], args[0]
-            return ' '.join('"'+w+'"' if ' ' in w else w for w in args)
+    #         args = re.findall(regx, line)
+    #         args[0], args[1] = args[1], args[0]
+    #         return ' '.join('"'+w+'"' if ' ' in w else w for w in args)
 
-        return line
+    #     return line
 
     def emptyline(self):
-        """Handle empty line w/ no-op"""
+        """Handle empty line by doing nothing"""
         pass
 
     def do_quit(self, _):
@@ -87,27 +87,30 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
         print(obj.id)
 
-    def do_show(self, line):
-        """Prints the string representation of an instance based on
-        the class and id values"""
+    '''
+     def do_show(self, line):
+         """Prints the string representation of an instance based on
+         the class and id values"""
 
-        line = line.split(" ")
-        if not len(line[0]):
-            print("** class name missing **")
-            return
-        elif line[0] not in self.cls:
-            print("** class doesn't exist **")
-            return
-        elif len(line) == 1:
-            print("** instance id missing **")
-            return
-        key = "{}.{}".format(line[0], line[1])
-        obj_dict = storage.all()
-        if key not in obj_dict:
-            print("** no instance found **")
-            return
-        print(obj_dict[key])
+         line = line.split(" ")
+         if not len(line[0]):
+             print("** class name missing **")
+             return
+         elif line[0] not in self.cls:
+             print("** class doesn't exist **")
+             return
+         elif len(line) == 1:
+             print("** instance id missing **")
+             return
+         key = "{}.{}".format(line[0], line[1])
+         obj_dict = storage.all()
+         if key not in obj_dict:
+             print("** no instance found **")
+             return
+         print(obj_dict[key])
+    '''
 
+    '''
     def do_destroy(self, line):
         """Deletes an instance based on class name and id"""
         line = line.split(" ")
@@ -127,7 +130,9 @@ class HBNBCommand(cmd.Cmd):
             return
         obj_dict.pop(key)
         storage.save()
+    '''
 
+    '''
     def do_all(self, line):
         """Prints all string representation of all instances based or
         not on the class name"""
@@ -141,7 +146,9 @@ class HBNBCommand(cmd.Cmd):
             return
         cls_list = [str(v) for k, v in obj_dict.items() if line[0] in k]
         print(cls_list)
+    '''
 
+    '''
     def do_update(self, line):
         """Updates an instance based on the class name and id by adding
         or updating attributes"""
@@ -172,7 +179,9 @@ class HBNBCommand(cmd.Cmd):
             line[3] = type_attr(line[3])
         setattr(obj, line[2], line[3])
         storage.save()
+    '''
 
+    '''
     def do_count(self, line):
         """Retrives the number of instances of a class"""
         count = 0
@@ -181,6 +190,7 @@ class HBNBCommand(cmd.Cmd):
             if line in key:
                 count += 1
         print(count)
+    '''
 
 
 if __name__ == '__main__':
