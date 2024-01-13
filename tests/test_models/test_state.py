@@ -95,12 +95,12 @@ class Test_instantation(unittest.TestCase):
 
     def teat_init_class(self):
         """This function tests giving args a class key"""
-        state = State()
+        state1 = State()
         dict_state1 = state1.to_dict()
         dict_state1['__class__'] = "BaseModel"
         state2 = State(**dict_state1)
         dict_state2 = state2.to_dict()
-        self.assertEqual(dict_base2['__class__'], "State")
+        self.assertEqual(dict_state2['__class__'], "State")
 
 
 class Test_save(unittest.TestCase):
@@ -132,7 +132,7 @@ class Test_save(unittest.TestCase):
         """This function tests saving into a JSOM file"""
         state = State()
         state.save()
-        with open("file.json", encoding="utf-8") as f:
+        with open(models.storage._FileStorage__file_path, encoding="utf-8") as f:
             self.assertIn("State." + state.id, f.read())
 
 
@@ -165,6 +165,14 @@ class Test_to_dict(unittest.TestCase):
         state_dict = state.to_dict()
         self.assertIs(type(state_dict['created_at']), str)
         self.assertIs(type(state_dict['updated_at']), str)
+
+    def test_dict_kwargs(self):
+        """This function create a User with kwargs and tests its dict"""
+        tdy = datetime.datetime.today()
+        state = State(id="123456", created_at=tdy.isoformat(),
+                   updated_at=tdy.isoformat(), name="florida")
+        state_dict = state.to_dict()
+        self.assertIn('name', state_dict)
 
     def test_full_dict(self):
         """This function tests creation of a dictionary"""

@@ -27,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
     def __init__(self):
         """Initiliaze the instance"""
         super().__init__()
-        self.prompt = '(hbnb) '
+        HBNBCommand.prompt = '(hbnb) '
 
     def precmd(self, line):
         """This function intervenes and rewrites the command or simply
