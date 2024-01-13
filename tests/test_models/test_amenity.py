@@ -1,13 +1,15 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 Unittest for the Class "Amenity"
 """
 
+import io
 import unittest
-import time
 import datetime
-from models.amenity import Amenity
+import uuid
 import models
+from unittest.mock import patch
+from models.amenity import Amenity
 
 
 class Test_Amenity(unittest.TestCase):
@@ -200,3 +202,4 @@ class Test_to_dict(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+    pass
