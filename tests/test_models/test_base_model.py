@@ -93,7 +93,8 @@ class Test_save(unittest.TestCase):
         """This function tests saving into a JSOM file"""
         base = BaseModel()
         base.save()
-        with open(models.storage._FileStorage__file_path, encoding="utf-8") as f:
+        with open(models.storage._FileStorage__file_path,
+                  encoding="utf-8") as f:
             self.assertIn("BaseModel." + base.id, f.read())
 
 
