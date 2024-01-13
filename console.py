@@ -37,8 +37,6 @@ class HBNBCommand(cmd.Cmd):
     def precmd(self, line):
         """This function intervenes and rewrites the command or simply
         just return it unchanged"""
-        # if not sys.stdin.isatty():
-        #      print()
 
         cmds = [".all", ".count", ".show", ".destroy", ".update"]
         group1 = r'(?<=\.)[^(]+|[aA-zZ]+(?=\.)'
@@ -56,9 +54,9 @@ class HBNBCommand(cmd.Cmd):
                                        format(args[0], args[2], k, v))
                     return ''
                 except json.JSONDecodeError:
-                    args = re.findall(group1 + '|' + group2, line)
-                    args[0], args[1] = args[1], args[0]
-                    return ' '.join(args)
+                    # args = re.findall(group1 + '|' + group2, line)
+                    # args[0], args[1] = args[1], args[0]
+                    return line
 
             args = re.findall(regx, line)
             args[0], args[1] = args[1], args[0]
