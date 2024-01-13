@@ -5,7 +5,6 @@ Unittest for the Class "Review"
 
 import io
 import unittest
-import time
 import datetime
 import uuid
 import models
