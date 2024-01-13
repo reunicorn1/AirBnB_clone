@@ -35,11 +35,12 @@ class HBNBCommand(cmd.Cmd):
         super().__init__()
         HBNBCommand.prompt = "(hbnb) "
 
-    # def precmd(self, line):
-    #     """This function intervenes and rewrites the command or simply
-    #     just return it unchanged"""
-    #     # if not sys.stdin.isatty():
-    #     #      print()
+    def precmd(self, line):
+        """This function intervenes and rewrites the command or simply
+        just return it unchanged"""
+        if not sys.stdin.isatty():
+            print()
+        return cmd.Cmd.precmd(self, line)
 
     #     cmds = [".all", ".count", ".show", ".destroy", ".update"]
     #     group1 = r'(?<=\.)[^(]+|[aA-zZ]+(?=\.)'
