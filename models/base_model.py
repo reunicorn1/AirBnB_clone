@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 '''Module defines BaseModel class'''
 
 from uuid import uuid4
