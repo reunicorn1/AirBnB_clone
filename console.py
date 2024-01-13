@@ -25,6 +25,7 @@ class HBNBCommand(cmd.Cmd):
            "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
 
     def __init__(self):
+        """Initiliaze the instance"""
         super().__init__()
         self.prompt = '(hbnb) '
 
