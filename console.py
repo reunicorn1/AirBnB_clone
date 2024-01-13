@@ -67,9 +67,11 @@ class HBNBCommand(cmd.Cmd):
 
     #     return line
 
+    '''
     def emptyline(self):
         """Handle empty line by doing nothing"""
         pass
+    '''
 
     def do_quit(self, _):
         """Quit command to exit the program"""
