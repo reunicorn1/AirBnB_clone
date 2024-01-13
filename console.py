@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''Entry point of the command interpreter'''
+"""Entry point of the command interpreter"""
 
 import re
 import cmd
@@ -22,16 +22,16 @@ class HBNBCommand(cmd.Cmd):
     interface.
 
     Attrs:
-        cls(dcit): dictionary of all the instances.
+        cls(dict): dictionary of all the instances.
     """
 
-    cls = {"BaseModel": BaseModel, "User": User, "State": State,
-           "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
+    # cls = {"BaseModel": BaseModel, "User": User, "State": State,
+    #        "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
 
     def __init__(self):
         """Initiliaze the instance"""
         super().__init__()
-        HBNBCommand.prompt = '(hbnb) '
+        HBNBCommand.prompt = "(hbnb) "
 
     # def precmd(self, line):
     #     """This function intervenes and rewrites the command or simply
@@ -80,14 +80,16 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         """Creates a new instance of the class provided, save it into
         a JSON file, and prints the id"""
+        cls = {"BaseModel": BaseModel, "User": User, "State": State,
+               "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
         line = line.split(" ")
         if not len(line[0]):
             print("** class name missing **")
             return
-        elif line[0] not in HBNBCommand.cls:
+        elif line[0] not in cls:
             print("** class doesn't exist **")
             return
-        obj = HBNBCommand.cls[line[0]]()
+        obj = cls[line[0]]()
         storage.save()
         print(obj.id)
 
