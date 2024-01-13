@@ -25,8 +25,10 @@ class HBNBCommand(cmd.Cmd):
         cls(dict): dictionary of all the instances.
     """
 
-    # cls = {"BaseModel": BaseModel, "User": User, "State": State,
-    #        "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
+    cls = {
+            "BaseModel": BaseModel, "User": User, "State": State,
+            "City": City, "Amenity": Amenity, "Place": Place, "Review": Review
+          }
 
     def __init__(self):
         """Initiliaze the instance"""
@@ -80,8 +82,11 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         """Creates a new instance of the class provided, save it into
         a JSON file, and prints the id"""
-        cls = {"BaseModel": BaseModel, "User": User, "State": State,
-               "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
+        cls = {
+                "BaseModel": BaseModel, "User": User, "State": State,
+                "City": City, "Amenity": Amenity, "Place": Place,
+                "Review": Review
+              }
         line = line.split(" ")
         if not len(line[0]):
             print("** class name missing **")
