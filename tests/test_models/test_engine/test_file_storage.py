@@ -6,9 +6,15 @@ Unittest for the FileStorage Class
 import unittest
 import datetime
 import os
+import models
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
-import models
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 class Test_attributes(unittest.TestCase):
     """This class defines unittests for the attributes of FileStorage class"""
@@ -79,8 +85,26 @@ class Test_creating_objs(unittest.TestCase):
     def test_new(self):
         """This function tests the mthod new of FileStorage"""
         base = BaseModel()
+        usr = User()
+        state = State()
+        city = City()
+        amenity = Amenity()
+        place = Place()
+        review = Review()
         models.storage.new(base)
+        models.storage.new(usr)
+        models.storage.new(state)
+        models.storage.new(city)
+        models.storage.new(amenity)
+        models.storage.new(place)
+        models.storage.new(review)
         self.assertIn("BaseModel." + base.id, models.storage.all().keys())
+        self.assertIn("User." + usr.id, models.storage.all().keys())
+        self.assertIn("State." + state.id, models.storage.all().keys())
+        self.assertIn("City." + city.id, models.storage.all().keys())
+        self.assertIn("Amenity." + amenity.id, models.storage.all().keys())
+        self.assertIn("Place." + place.id, models.storage.all().keys())
+        self.assertIn("Review." + review.id, models.storage.all().keys())
 
     def test_new_args(self):
         """This function tests the new method with an argument"""
@@ -93,10 +117,23 @@ class Test_creating_objs(unittest.TestCase):
     def test_save(self):
         """This function tests for the save method of FileStorage"""
         base = BaseModel()
+        usr = User()
+        state = State()
+        city = City()
+        amenity = Amenity()
+        place = Place()
+        review = Review()
+        # All objs will be added automatically to __objects dict
         models.storage.save()
         with open("file.json", encoding="utf-8") as f:
             read_data = f.read()
             self.assertIn("BaseModel." + base.id, read_data)
+            self.assertIn("User." + usr.id, read_data)
+            self.assertIn("State." + state.id, read_data)
+            self.assertIn("City." + city.id, read_data)
+            self.assertIn("Amenity." + amenity.id, read_data)
+            self.assertIn("Place." + place.id, read_data)
+            self.assertIn("Review." + review.id, read_data)
 
     def test_save_args(self):
         """This function tests the save method with arguments"""
@@ -105,12 +142,24 @@ class Test_creating_objs(unittest.TestCase):
 
     def test_reload(self):
         """This function tests the reload function"""
-        base1 = BaseModel()
+        base = BaseModel()
+        usr = User()
+        state = State()
+        city = City()
+        amenity = Amenity()
+        place = Place()
+        review = Review()
         models.storage.save()
         models.storage._FileStorage__objects = {}
         models.storage.reload()
         objs = models.storage.all()
-        self.assertIn("BaseModel." + base1.id, objs)
+        self.assertIn("BaseModel." + base.id, objs)
+        self.assertIn("User." + usr.id, objs)
+        self.assertIn("State." + state.id, objs)
+        self.assertIn("City." + city.id, objs)
+        self.assertIn("Amenity." + amenity.id, objs)
+        self.assertIn("Place." + place.id, objs)
+        self.assertIn("Review." + review.id, objs)
 
     def test_reloading_without_save(self):
         """This function calls reload() without save()"""

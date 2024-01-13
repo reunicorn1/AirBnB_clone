@@ -12,4 +12,3 @@ import models
 
 class Test_Amenity(unittest.TestCase):
     pass
-

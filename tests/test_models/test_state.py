@@ -14,7 +14,6 @@ class Test_state_attr(unittest.TestCase):
     """This class defines unittests for the different attributes both inherited
     and unique for the State Class"""
 
-
     def test_uniq_time(self):
         """This function tests for the uniquenss of time creation"""
         state1 = State()
@@ -78,7 +77,8 @@ class Test_instantation(unittest.TestCase):
     def test_init_kwargs(self):
         """This function create a State with kwargs"""
         tdy = datetime.datetime.today()
-        state = State(id="123456", created_at=tdy.isoformat(), updated_at=tdy.isoformat(), name= "texas")
+        state = State(id="123456", created_at=tdy.isoformat(),
+                      updated_at=tdy.isoformat(), name="texas")
         self.assertEqual(state.id, "123456")
         self.assertEqual(state.created_at, tdy)
         self.assertEqual(state.updated_at, tdy)
@@ -87,7 +87,8 @@ class Test_instantation(unittest.TestCase):
     def test_init_args(self):
         """This function creates a State without args"""
         tdy = datetime.datetime.today()
-        state = State("7890", id="4567", created_at=tdy.isoformat(), updated_at=tdy.isoformat())
+        state = State("7890", id="4567", created_at=tdy.isoformat(),
+                      updated_at=tdy.isoformat())
         self.assertEqual(state.id, "4567")
         self.assertEqual(state.created_at, tdy)
         self.assertEqual(state.updated_at, tdy)
@@ -100,6 +101,7 @@ class Test_instantation(unittest.TestCase):
         state2 = State(**dict_state1)
         dict_state2 = state2.to_dict()
         self.assertEqual(dict_base2['__class__'], "State")
+
 
 class Test_save(unittest.TestCase):
     """This class tests the instance method save(self)"""
@@ -171,13 +173,14 @@ class Test_to_dict(unittest.TestCase):
         tdy = datetime.datetime.today()
         state.created_at = state.updated_at = tdy
         dict_state = {'__class__': 'State',
-                     'updated_at': tdy.isoformat(),
-                     'created_at': tdy.isoformat(),
-                     'id': "123456"}
+                      'updated_at': tdy.isoformat(),
+                      'created_at': tdy.isoformat(),
+                      'id': "123456"}
         self.assertDictEqual(state.to_dict(), dict_state)
 
     def test_dict_class(self):
-        """This function tests that __dict__ repr and to_dict() are different"""
+        """This function tests that __dict__ repr and to_dict()
+        are different"""
         state = State()
         self.assertNotEqual(state.__dict__, state.to_dict())
 

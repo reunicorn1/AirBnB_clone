@@ -14,7 +14,6 @@ class Test_user_attr(unittest.TestCase):
     """This class defines unittests for the different attributes both inherited
     and unique for the User Class"""
 
-
     def test_uniq_time(self):
         """This function tests for the uniquenss of time creation"""
         user1 = User()
@@ -90,7 +89,8 @@ class Test_instantation(unittest.TestCase):
     def test_init_kwargs(self):
         """This function create a User with kwargs"""
         tdy = datetime.datetime.today()
-        usr = User(id="123456", created_at=tdy.isoformat(), updated_at=tdy.isoformat())
+        usr = User(id="123456", created_at=tdy.isoformat(),
+                   updated_at=tdy.isoformat())
         self.assertEqual(usr.id, "123456")
         self.assertEqual(usr.created_at, tdy)
         self.assertEqual(usr.updated_at, tdy)
@@ -98,7 +98,8 @@ class Test_instantation(unittest.TestCase):
     def test_init_args(self):
         """This function creates a User without args"""
         tdy = datetime.datetime.today()
-        usr = User("7890", id="4567", created_at=tdy.isoformat(), updated_at=tdy.isoformat())
+        usr = User("7890", id="4567",
+                   created_at=tdy.isoformat(), updated_at=tdy.isoformat())
         self.assertEqual(usr.id, "4567")
         self.assertEqual(usr.created_at, tdy)
         self.assertEqual(usr.updated_at, tdy)
@@ -111,6 +112,7 @@ class Test_instantation(unittest.TestCase):
         usr2 = User(**dict_usr1)
         dict_usr2 = usr2.to_dict()
         self.assertEqual(dict_base2['__class__'], "User")
+
 
 class Test_save(unittest.TestCase):
     """This class tests the instance method save(self)"""
@@ -169,11 +171,25 @@ class Test_to_dict(unittest.TestCase):
         self.assertIn('num', usr.to_dict())
 
     def test_type_time_in_dict(self):
-        """This function tests the type of created_at and updated_at in dict"""
+        """This function tests the type of created_at and updated_at
+        in dict"""
         usr = User()
         usr_dict = usr.to_dict()
+        self.assertIs(type(usr_dict['id']), str)
         self.assertIs(type(usr_dict['created_at']), str)
         self.assertIs(type(usr_dict['updated_at']), str)
+
+    def test_dict_kwargs(self):
+        """This function create a User with kwargs and tests its dict"""
+        tdy = datetime.datetime.today()
+        usr = User(id="123456", created_at=tdy.isoformat(),
+                   updated_at=tdy.isoformat(), email="airbnb2@mail.com",
+                   first_name="John", last_name="Doe", password="root")
+        usr_dict = usr.to_dict()
+        self.assertIn('email', usr_dict)
+        self.assertIn('first_name', usr_dict)
+        self.assertIn('last_name', usr_dict)
+        self.assertIn('password', usr_dict)
 
     def test_full_dict(self):
         """This function tests creation of a dictionary"""
@@ -182,18 +198,20 @@ class Test_to_dict(unittest.TestCase):
         tdy = datetime.datetime.today()
         usr.created_at = usr.updated_at = tdy
         dict_usr = {'__class__': 'User',
-                     'updated_at': tdy.isoformat(),
-                     'created_at': tdy.isoformat(),
-                     'id': "123456"}
+                    'updated_at': tdy.isoformat(),
+                    'created_at': tdy.isoformat(),
+                    'id': "123456"}
         self.assertDictEqual(usr.to_dict(), dict_usr)
 
     def test_dict_class(self):
-        """This function tests that __dict__ repr and to_dict() are different"""
+        """This function tests that __dict__ repr and to_dict()
+        are different"""
         usr = User()
         self.assertNotEqual(usr.__dict__, usr.to_dict())
 
     def test_to_dict_arg(self):
-        """This function tests giving the instance method to_dict arguments"""
+        """This function tests giving the instance method to_dict
+        arguments"""
         with self.assertRaises(TypeError):
             User().to_dict("arg")
 
