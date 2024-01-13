@@ -54,9 +54,7 @@ class HBNBCommand(cmd.Cmd):
                                        format(args[0], args[2], k, v))
                     return ''
                 except json.JSONDecodeError:
-                    args = re.findall(group1 + '|' + group2, line)
-                    args[0], args[1] = args[1], args[0]
-                    return ' '.join(args)
+                    return line
 
             args = re.findall(regx, line)
             args[0], args[1] = args[1], args[0]
