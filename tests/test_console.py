@@ -48,11 +48,9 @@ class TestConsole_Base(unittest.TestCase):
         expected = ("Documented commands (type help <topic>):\n",
                     "========================================\n",
                     '  '.join(cmds))
-        '''
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("help"))
             self.assertEqual(''.join(expected), f.getvalue().strip())
-        '''
 
 
 if __name__ == '__main__':
