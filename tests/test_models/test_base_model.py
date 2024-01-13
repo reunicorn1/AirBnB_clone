@@ -69,7 +69,8 @@ class Test_save(unittest.TestCase):
     def test_save_file(self):
         """This function tests the save in a file functionality"""
         base = BaseModel()
-        with open(models.storage._FileStorage__file_path, encoding="utf-8") as f:
+        with open(models.storage._FileStorage__file_path,
+                  encoding="utf-8") as f:
             read_data = f.read()
             self.assertIn("BaseModel." + base.id, read_data)
 
