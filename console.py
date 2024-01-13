@@ -40,11 +40,6 @@ class HBNBCommand(cmd.Cmd):
         # if not sys.stdin.isatty():
         #      print()
 
-    # def precmd(self, line):
-    #     """This function intervenes and rewrites the command or simply
-    #     just return it unchanged"""
-    #     # if not sys.stdin.isatty():
-    #     #      print()
         cmds = [".all", ".count", ".show", ".destroy", ".update"]
         group1 = r'(?<=\.)[^(]+|[aA-zZ]+(?=\.)'
         group2 = r'(?<=\(\"|\(\')[a-z0-9\-]+'
@@ -64,7 +59,6 @@ class HBNBCommand(cmd.Cmd):
                     args = re.findall(group1 + '|' + group2, line)
                     args[0], args[1] = args[1], args[0]
                     return ' '.join(args)
->>>>>>> c7dd84f5f2fd254ea3f0029e6fb99de587751516
 
             args = re.findall(regx, line)
             args[0], args[1] = args[1], args[0]
@@ -85,8 +79,10 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, line):
-        """Creates a new instance of the class provided, save it into
-        a JSON file, and prints the id"""
+        """
+        Creates a new instance of the class provided, save it into
+        a JSON file, and prints the id
+        """
         line = line.split(" ")
         if not len(line[0]):
             print("** class name missing **")
@@ -99,8 +95,10 @@ class HBNBCommand(cmd.Cmd):
         print(obj.id)
 
     def do_show(self, line):
-        """Prints the string representation of an instance based on
-         the class and id values"""
+        """
+        Prints the string representation of an instance based on
+        the class and id values
+        """
 
         line = line.split(" ")
         if not len(line[0]):
@@ -140,8 +138,10 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     def do_all(self, line):
-        """Prints all string representation of all instances based or
-        not on the class name"""
+        """
+        Prints all string representation of all instances based or
+        not on the class name
+        """
         line = line.split(" ")
         if len(line[0]) and line[0] not in self.cls:
             print("** class doesn't exist **")
@@ -154,8 +154,10 @@ class HBNBCommand(cmd.Cmd):
         print(cls_list)
 
     def do_update(self, line):
-        """Updates an instance based on the class name and id by adding
-        or updating attributes"""
+        """
+        Updates an instance based on the class name and id by adding
+        or updating attributes
+        """
         line = shlex.split(line)
         if not line:
             print("** class name missing **")
