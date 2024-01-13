@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""Entry point of the command interpreter"""
+"""Entry point of the command interpreter
+Defines `HBNBCommand` class that inherits from
+`cmd.Cmd`
+"""
 
 import re
 import cmd
@@ -22,6 +25,7 @@ class HBNBCommand(cmd.Cmd):
     interface.
 
     Attrs:
+        prompt(str): prompt string
         cls(dict): dictionary of all the instances.
     """
 
@@ -30,10 +34,7 @@ class HBNBCommand(cmd.Cmd):
             "City": City, "Amenity": Amenity, "Place": Place, "Review": Review
           }
 
-    def __init__(self):
-        """Initiliaze the instance"""
-        super().__init__()
-        HBNBCommand.prompt = "(hbnb) "
+    prompt = "(hbnb) "
 
     def precmd(self, line):
         """This function intervenes and rewrites the command or simply
