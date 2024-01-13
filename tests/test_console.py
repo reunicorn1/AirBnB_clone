@@ -96,10 +96,11 @@ class TestConsole_help(unittest.TestCase):
 
     def test_help_help(self):
         """This function tests the <help help> message content"""
-        out = 'List available commands with "help" or detailed help with "help cmd".'
+        out = ['List available commands with "help" or detailed",
+               "help with "help cmd".']
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("help help"))
-            self.assertEqual(out, f.getvalue().strip())
+            self.assertEqual(" ".join(out), f.getvalue().strip())
 
     def test_help_quit(self):
         """This function tests the <help quit> message content"""
@@ -118,11 +119,11 @@ class TestConsole_help(unittest.TestCase):
 
     def test_help_create(self):
         """This function tests the <help update> message content"""
-        out = ["Updates an instance based on the class name and id by adding\n",
-               "        or updating attributes"]
+        o = ["Updates an instance based on the class name and id by adding\n",
+             "        or updating attributes"]
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("help update"))
-            self.assertEqual(''.join(out), f.getvalue().strip())
+            self.assertEqual(''.join(o), f.getvalue().strip())
 
 
 class TestConsole_create(unittest.TestCase):
@@ -169,7 +170,8 @@ class TestConsole_create(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("BaseModel.create()"))
             obj_id = f.getvalue().strip()
-        with open(models.storage._FileStorage__file_path, encoding="utf-8") as file:
+        with open(models.storage._FileStorage__file_path,
+                  encoding="utf-8") as file:
             read_data = f.read()
             self.assertIn("BaseModel." + obj_id, read_data)
         self.assertIn("BaseModel." + obj_id, models.storage.all().keys())
@@ -179,7 +181,8 @@ class TestConsole_create(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("User.create()"))
             obj_id = f.getvalue().strip()
-        with open(models.storage._FileStorage__file_path, encoding="utf-8") as file:
+        with open(models.storage._FileStorage__file_path,
+                  encoding="utf-8") as file:
             read_data = f.read()
             self.assertIn("User." + obj_id, read_data)
         self.assertIn("User." + obj_id, models.storage.all().keys())
@@ -189,7 +192,8 @@ class TestConsole_create(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertfalse(hbnbcommand().onecmd("City.create()"))
             obj_id = f.getvalue().strip()
-        with open(models.storage._filestorage__file_path, encoding="utf-8") as file:
+        with open(models.storage._filestorage__file_path,
+                  encoding="utf-8") as file:
             read_data = f.read()
             self.assertin("City." + obj_id, read_data)
         self.assertin("City." + obj_id, models.storage.all().keys())
@@ -199,7 +203,8 @@ class TestConsole_create(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertfalse(hbnbcommand().onecmd("State.create()"))
             obj_id = f.getvalue().strip()
-        with open(models.storage._filestorage__file_path, encoding="utf-8") as file:
+        with open(models.storage._filestorage__file_path,
+                  encoding="utf-8") as file:
             read_data = f.read()
             self.assertin("State." + obj_id, read_data)
         self.assertin("State." + obj_id, models.storage.all().keys())
@@ -209,11 +214,11 @@ class TestConsole_create(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertfalse(hbnbcommand().onecmd("Amenity.create()"))
             obj_id = f.getvalue().strip()
-        with open(models.storage._filestorage__file_path, encoding="utf-8") as file:
+        with open(models.storage._filestorage__file_path,
+                  encoding="utf-8") as file:
             read_data = f.read()
             self.assertin("Amenity." + obj_id, read_data)
         self.assertin("Amenity." + obj_id, models.storage.all().keys())
-
 
 
 if __name__ == '__main__':
