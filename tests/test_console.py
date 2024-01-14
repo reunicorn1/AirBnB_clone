@@ -1293,17 +1293,17 @@ class TestConsole_update(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Place"))
             _id = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "update Place " + _id + " name" + " value"
-            self.assertFalse(HBNBCommand().onecmd(cmd))
-            self.assertIn("name", models.storage.all()["Place." + _id].__dict__)
+        cmd = "update Place " + _id + " name" + " value"
+        self.assertFalse(HBNBCommand().onecmd(cmd))
+        attr = models.storage.all()["Place." + _id].__dict__
+        self.assertIn("name", attr)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Review"))
             _id = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "update Review " + _id + " name" + " value"
-            self.assertFalse(HBNBCommand().onecmd(cmd))
-            self.assertIn("name", models.storage.all()["Review." + _id].__dict__)
+        cmd = "update Review " + _id + " name" + " value"
+        self.assertFalse(HBNBCommand().onecmd(cmd))
+        attr = models.storage.all()["Review." + _id].__dict__
+        self.assertIn("name", attr)
 
     def test_update_objs_method(self):
         """This function tests the functionality of the update method"""
