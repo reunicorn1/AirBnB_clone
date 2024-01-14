@@ -1358,11 +1358,11 @@ class TestConsole_update(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Review"))
             _id = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "Review.update('{}', 'name', 'value')".format(_id)
-            line = HBNBCommand().precmd(cmd)
-            self.assertFalse(HBNBCommand().onecmd(line))
-            self.assertIn("name", models.storage.all()["Review." + _id].__dict__)
+        cmd = "Review.update('{}', 'name', 'value')".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["Review." + _id].__dict__
+        self.assertIn("name", attr)
 
 
 if __name__ == '__main__':
