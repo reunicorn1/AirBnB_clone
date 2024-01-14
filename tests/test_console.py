@@ -1217,21 +1217,24 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create State"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("State.update('{}', 'name')".format(obj_id))
+            cmd = "State.update('{}', 'name')".format(obj_id)
+            line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(msg, f.getvalue().strip())
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create City"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("City.update('{}', 'name')".format(obj_id))
+            cmd = "City.update('{}', 'name')".format(obj_id)
+            line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(msg, f.getvalue().strip())
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Amenity"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("Amenity.update('{}', 'name')".format(obj_id))
+            cmd = "Amenity.update('{}', 'name')".format(obj_id)
+            line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(msg, f.getvalue().strip())
         with patch("sys.stdout", new=StringIO()) as f:
