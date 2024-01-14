@@ -427,21 +427,23 @@ class TestConsole_create(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("BaseModel,show('{}')".format(obj_id)))
+            line = HBNBCommand().precmd("BaseModel.show('{}')".format(obj_id))
+            self.assertFalse(HBNBCommand().onecmd(line))
             obj = models.storage.all()["BaseModel." + obj_id]
             self.assertEqual(f.getvalue().strip(), str(obj))
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create User"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("User,show('{}')".format(obj_id)))
+            line = HBNBCommand().precmd("User.show('{}')".format(obj_id))
+            self.assertFalse(HBNBCommand().onecmd(line))
             obj = models.storage.all()["User." + obj_id]
             self.assertEqual(f.getvalue().strip(), str(obj))
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create State"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("State,show('{}')".format(obj_id)))
+            line = HBNBCommand().precmd("State.show('{}')".format(obj_id))
             self.assertFalse(HBNBCommand().onecmd(line))
             obj = models.storage.all()["State." + obj_id]
             self.assertEqual(f.getvalue().strip(), str(obj))
@@ -449,7 +451,7 @@ class TestConsole_create(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create City"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("City,show('{}') ".format(obj_id)))
+            line = HBNBCommand().precmd("City.show('{}') ".format(obj_id))
             self.assertFalse(HBNBCommand().onecmd(line))
             obj = models.storage.all()["City." + obj_id]
             self.assertEqual(f.getvalue().strip(), str(obj))
@@ -457,7 +459,7 @@ class TestConsole_create(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create Amenity"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("Amenity,show('{}')".format(obj_id)))
+            line = HBNBCommand().precmd("Amenity.show('{}')".format(obj_id))
             self.assertFalse(HBNBCommand().onecmd(line))
             obj = models.storage.all()["Amenity." + obj_id]
             self.assertEqual(f.getvalue().strip(), str(obj))
@@ -465,7 +467,7 @@ class TestConsole_create(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create Place"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("Place,show('{}')".format(obj_id)))
+            line = HBNBCommand().precmd("Place.show('{}')".format(obj_id))
             self.assertFalse(HBNBCommand().onecmd(line))
             obj = models.storage.all()["Place." + obj_id]
             self.assertEqual(f.getvalue().strip(), str(obj))
@@ -473,11 +475,246 @@ class TestConsole_create(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create Review"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("Review.show('{}')".format(obj_id)))
+            line = HBNBCommand().precmd("Review.show('{}')".format(obj_id))
             self.assertFalse(HBNBCommand().onecmd(line))
             obj = models.storage.all()["Review." + obj_id]
             self.assertEqual(f.getvalue().strip(), str(obj))
 
+class TestConsole_destroy(unittest.TestCase):
+    """This class defines unittests for the destroy method of the console"""
+
+    @classmethod
+    def setUpClass(cls):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        models.storage._FileStorage__objects = {}
+
+    def tearDown(self):
+        """removes files created and resets the value of __objects"""
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        models.storage._FileStorage__objects = {}
+
+    def test_destroy_invalid(self):
+        """This function tests destroy command with missing class name"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy"))
+            self.assertEqual("** class name missing **", f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy Model"))
+            self.assertEqual("** class doesn't exist **", f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Model.destroy()")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual("** class doesn't exist **", f.getvalue().strip())
+
+    def test_destroy_instance_id_missing(self):
+        """This function tests every possibility of recieving "id missing" msg"""
+        msg = "** instance id missing **"
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy BaseModel"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy User"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy State"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy City"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy Amenity"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy Place"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy Review"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("BaseModel.destroy()")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("User.destroy()")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("State.destroy()")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("City.destroy()")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Amenity.destroy()")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Place.destroy()")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Review.destroy()")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_invalid_id(self):
+        """This function tests all the possibilities of recieving an invalid id msg"""
+        msg = "** no instance found **"
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy BaseModel 1212121"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy User 1212121"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy State 1212121"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy City 1212121"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy Place 1212121"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy Amenity 1212121"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy Review 1212121"))
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd('BaseModel.destroy("1212121")')
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual("** no instance found **", f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd('User.destroy("1212121")')
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual("** no instance found **", f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("State.destroy('1212121')")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual("** no instance found **", f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("City.destroy('1212121')")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual("** no instance found **", f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Place.destroy('1212121')")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual("** no instance found **", f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Amenity.destroy('1212121')")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual("** no instance found **", f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Review.destroy('1212121')")
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertEqual("** no instance found **", f.getvalue().strip())
+
+    def test_destroy_objs(self):
+        """This function tests the functionality of the destroy method"""
+        msg = "** no instance found **"
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy BaseModel " + obj_id))
+            self.assertNotIn("BaseModel." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create User"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy User " + obj_id))
+            self.assertNotIn("User." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create State"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy State " + obj_id))
+            self.assertNotIn("State." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create City"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy City " + obj_id))
+            self.assertNotIn("City." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Amenity"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy Amenity " + obj_id))
+            self.assertNotIn("Amenity." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy Place " + obj_id))
+            self.assertNotIn("Place." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Review"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("destroy Review " + obj_id))
+            self.assertNotIn("Place." + obj_id, models.storage.all())
+
+    def test_destroy_method_format(self):
+        """This function tests the destroy method in the dot notation"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("BaseModel.destroy('{}')".format(obj_id))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertNotIn("BaseModel." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create User"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("User.destroy('{}')".format(obj_id))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertNotIn("User." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create State"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("State.destroy('{}')".format(obj_id))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertNotIn("State." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create City"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("City.destroy('{}') ".format(obj_id))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertNotIn("City." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Amenity"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Amenity.destroy('{}')".format(obj_id))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertNotIn("Amenity." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Place.destroy('{}')".format(obj_id))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertNotIn("Place." + obj_id, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Review"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Review.destroy('{}')".format(obj_id))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            self.assertNotIn("Review." + obj_id, models.storage.all())
 
 if __name__ == '__main__':
     unittest.main()
