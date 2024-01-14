@@ -1310,19 +1310,19 @@ class TestConsole_update(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
             _id = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "BaseModel.update('{}', 'name', 'value')".format(_id)
-            line = HBNBCommand().precmd(cmd)
-            self.assertFalse(HBNBCommand().onecmd(line))
-            self.assertIn("name", models.storage.all()["BaseModel." + _id].__dict__)
+        cmd = "BaseModel.update('{}', 'name', 'value')".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["BaseModel." + _id].__dict__
+        self.assertIn("name", attr)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create User"))
             _id = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "User.update('{}', 'name', 'value')".format(_id)
-            line = HBNBCommand().precmd(cmd)
-            self.assertFalse(HBNBCommand().onecmd(line))
-            self.assertIn("name", models.storage.all()["User." + _id].__dict__)
+        cmd = "User.update('{}', 'name', 'value')".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["User." + _id].__dict__
+        self.assertIn("name", attr)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create State"))
             _id = f.getvalue().strip()
