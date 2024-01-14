@@ -154,9 +154,9 @@ class TestConsole_create(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create Model"))
             self.assertEqual("** class doesn't exist **", f.getvalue().strip())
 
-
     def test_create_invalid_method(self):
-        """This function tests create command with missing arguments in method format"""
+        """This function tests create command with missing arguments
+        in method format"""
         out1 = "*** Unknown syntax: Model.create()"
         out2 = "*** Unknown syntax: User.create()"
         with patch("sys.stdout", new=StringIO()) as f:
@@ -254,9 +254,9 @@ class TestConsole_create(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual("** class doesn't exist **", f.getvalue().strip())
 
-
     def test_show_instance_id_missing(self):
-        """This function tests every possibility of recieving "id missing" msg"""
+        """This function tests every possibility of recieving "id missing"
+        msg"""
         msg = "** instance id missing **"
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("show BaseModel"))
@@ -309,7 +309,8 @@ class TestConsole_create(unittest.TestCase):
             self.assertEqual(msg, f.getvalue().strip())
 
     def test_show_invalid_id(self):
-        """This function tests all the possibilities of recieving an invalid id msg"""
+        """This function tests all the possibilities of recieving an
+        invalid id msg"""
         msg = "** no instance found **"
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("show BaseModel 1212121"))
@@ -360,7 +361,6 @@ class TestConsole_create(unittest.TestCase):
             line = HBNBCommand().precmd("Review.show('1212121')")
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual("** no instance found **", f.getvalue().strip())
-
 
     def test_show_objs(self):
         """This function tests the functionality of the show method"""
@@ -480,6 +480,7 @@ class TestConsole_create(unittest.TestCase):
             obj = models.storage.all()["Review." + obj_id]
             self.assertEqual(f.getvalue().strip(), str(obj))
 
+
 class TestConsole_destroy(unittest.TestCase):
     """This class defines unittests for the destroy method of the console"""
 
@@ -513,7 +514,8 @@ class TestConsole_destroy(unittest.TestCase):
             self.assertEqual("** class doesn't exist **", f.getvalue().strip())
 
     def test_destroy_instance_id_missing(self):
-        """This function tests every possibility of recieving "id missing" msg"""
+        """This function tests every possibility of recieving
+        "id missing" msg"""
         msg = "** instance id missing **"
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("destroy BaseModel"))
@@ -566,7 +568,8 @@ class TestConsole_destroy(unittest.TestCase):
             self.assertEqual(msg, f.getvalue().strip())
 
     def test_destroy_invalid_id(self):
-        """This function tests all the possibilities of recieving an invalid id msg"""
+        """This function tests all the possibilities of recieving an
+        invalid id msg"""
         msg = "** no instance found **"
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("destroy BaseModel 1212121"))
@@ -623,10 +626,10 @@ class TestConsole_destroy(unittest.TestCase):
         msg = "** no instance found **"
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
-            obj_id = f.getvalue().strip()
+            _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("destroy BaseModel " + obj_id))
-            self.assertNotIn("BaseModel." + obj_id, models.storage.all())
+            self.assertFalse(HBNBCommand().onecmd("destroy BaseModel " + _id))
+            self.assertNotIn("BaseModel." + _id, models.storage.all())
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create User"))
             obj_id = f.getvalue().strip()
@@ -670,8 +673,8 @@ class TestConsole_destroy(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("BaseModel.destroy('{}')".format(obj_id))
-            self.assertFalse(HBNBCommand().onecmd(line))
+            li = HBNBCommand().precmd("BaseModel.destroy('{}')".format(obj_id))
+            self.assertFalse(HBNBCommand().onecmd(li))
             self.assertNotIn("BaseModel." + obj_id, models.storage.all())
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create User"))
@@ -715,6 +718,7 @@ class TestConsole_destroy(unittest.TestCase):
             line = HBNBCommand().precmd("Review.destroy('{}')".format(obj_id))
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertNotIn("Review." + obj_id, models.storage.all())
+
 
 if __name__ == '__main__':
     unittest.main()
