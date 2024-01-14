@@ -1209,7 +1209,8 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create User"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("User.update('{}', 'name')".format(obj_id))
+            cmd = "User.update('{}', 'name')".format(obj_id)
+            line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(msg, f.getvalue().strip())
         with patch("sys.stdout", new=StringIO()) as f:
