@@ -901,6 +901,7 @@ class TestConsole_all(unittest.TestCase):
             self.assertIs(type(list_obj), list)
             self.assertTrue(all("Review" in d_ for d_ in list_obj))
 
+
 class TestConsole_update(unittest.TestCase):
     """This class defines unittests for the update method of the console"""
 
@@ -1139,6 +1140,7 @@ class TestConsole_update(unittest.TestCase):
             line = HBNBCommand().precmd("Review.update('{}')".format(obj_id))
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(msg, f.getvalue().strip())
+
 
 if __name__ == '__main__':
     unittest.main()
