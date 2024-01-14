@@ -420,5 +420,64 @@ class TestConsole_create(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("show BaseModel " + obj_id))
             obj = models.storage.all()["BaseModel." + obj_id]
             self.assertEqual(f.getvalue().strip(), str(obj))
+
+    def test_show_method_format(self):
+        """This function tests the show method in the dot notation"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("BaseModel,show('{}')".format(obj_id)))
+            obj = models.storage.all()["BaseModel." + obj_id]
+            self.assertEqual(f.getvalue().strip(), str(obj))
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create User"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("User,show('{}')".format(obj_id)))
+            obj = models.storage.all()["User." + obj_id]
+            self.assertEqual(f.getvalue().strip(), str(obj))
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create State"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("State,show('{}')".format(obj_id)))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            obj = models.storage.all()["State." + obj_id]
+            self.assertEqual(f.getvalue().strip(), str(obj))
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create City"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("City,show('{}') ".format(obj_id)))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            obj = models.storage.all()["City." + obj_id]
+            self.assertEqual(f.getvalue().strip(), str(obj))
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Amenity"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Amenity,show('{}')".format(obj_id)))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            obj = models.storage.all()["Amenity." + obj_id]
+            self.assertEqual(f.getvalue().strip(), str(obj))
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Place,show('{}')".format(obj_id)))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            obj = models.storage.all()["Place." + obj_id]
+            self.assertEqual(f.getvalue().strip(), str(obj))
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Review"))
+            obj_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            line = HBNBCommand().precmd("Review.show('{}')".format(obj_id)))
+            self.assertFalse(HBNBCommand().onecmd(line))
+            obj = models.storage.all()["Review." + obj_id]
+            self.assertEqual(f.getvalue().strip(), str(obj))
+
+
 if __name__ == '__main__':
     unittest.main()
