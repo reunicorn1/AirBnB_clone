@@ -1273,24 +1273,23 @@ class TestConsole_update(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create State"))
             _id = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "update State " + _id + " name" + " value"
-            self.assertFalse(HBNBCommand().onecmd(cmd))
-            self.assertIn("name", models.storage.all()["State." + _id].__dict__)
+        cmd = "update State " + _id + " name" + " value"
+        self.assertFalse(HBNBCommand().onecmd(cmd))
+        attr = models.storage.all()["State." + _id].__dict__
+        self.assertIn("name", attr)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create City"))
             _id = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "update City " + _id + " name" + " value"
-            self.assertFalse(HBNBCommand().onecmd(cmd))
-            self.assertIn("name", models.storage.all()["City." + _id].__dict__)
+        cmd = "update City " + _id + " name" + " value"
+        self.assertFalse(HBNBCommand().onecmd(cmd))
+        attr = models.storage.all()["City." + _id].__dict__
+        self.assertIn("name", attr)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Amenity"))
             _id = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "update Amenity " + _id + " name" + " value"
-            self.assertFalse(HBNBCommand().onecmd(cmd))
-            self.assertIn("name", models.storage.all()["Amenity." + _id].__dict__)
+        cmd = "update Amenity " + _id + " name" + " value"
+        self.assertFalse(HBNBCommand().onecmd(cmd))
+        self.assertIn("name", models.storage.all()["Amenity." + _id].__dict__)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Place"))
             _id = f.getvalue().strip()
