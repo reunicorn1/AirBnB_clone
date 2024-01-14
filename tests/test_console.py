@@ -1246,45 +1246,51 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
             _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "update BaseModel " + _id + ", 'name'" + ", 'value'"
+            cmd = "update BaseModel " + _id + " name" + " value"
             self.assertFalse(HBNBCommand().onecmd(cmd))
-            self.assertIn("name" + models.storage.all()["BaseModel. " + _id].__dict__)
+            self.assertIn("name", models.storage.all()["BaseModel." + _id].__dict__)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create User"))
-            obj_id = f.getvalue().strip()
+            _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update User " + obj_id))
-            self.assertNotIn("User." + obj_id, models.storage.all())
+            cmd = "update User " + _id + " name" + " value"
+            self.assertFalse(HBNBCommand().onecmd(cmd))
+            self.assertIn("name", models.storage.all()["User." + _id].__dict__)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create State"))
-            obj_id = f.getvalue().strip()
+            _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update State " + obj_id))
-            self.assertNotIn("State." + obj_id, models.storage.all())
+            cmd = "update State " + _id + " name" + " value"
+            self.assertFalse(HBNBCommand().onecmd(cmd))
+            self.assertIn("name", models.storage.all()["State." + _id].__dict__)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create City"))
-            obj_id = f.getvalue().strip()
+            _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update City " + obj_id))
-            self.assertNotIn("City." + obj_id, models.storage.all())
+            cmd = "update City " + _id + " name" + " value"
+            self.assertFalse(HBNBCommand().onecmd(cmd))
+            self.assertIn("name", models.storage.all()["City." + _id].__dict__)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Amenity"))
-            obj_id = f.getvalue().strip()
+            _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update Amenity " + obj_id))
-            self.assertNotIn("Amenity." + obj_id, models.storage.all())
+            cmd = "update Amenity " + _id + " name" + " value"
+            self.assertFalse(HBNBCommand().onecmd(cmd))
+            self.assertIn("name", models.storage.all()["Amenity." + _id].__dict__)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Place"))
-            obj_id = f.getvalue().strip()
+            _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update Place " + obj_id))
-            self.assertNotIn("Place." + obj_id, models.storage.all())
+            cmd = "update Place " + _id + " name" + " value"
+            self.assertFalse(HBNBCommand().onecmd(cmd))
+            self.assertIn("name", models.storage.all()["Place." + _id].__dict__)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Review"))
-            obj_id = f.getvalue().strip()
+            _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update Review " + obj_id))
-            self.assertNotIn("Place." + obj_id, models.storage.all())
+            cmd = "update Review " + _id + " name" + " value"
+            self.assertFalse(HBNBCommand().onecmd(cmd))
+            self.assertIn("name", models.storage.all()["Review." + _id].__dict__)
 
 if __name__ == '__main__':
     unittest.main()
