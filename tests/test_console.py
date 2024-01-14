@@ -1148,43 +1148,50 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
             _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update BaseModel " + _id + " value"))
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel "
+                                                  + _id + " value"))
             self.assertEqual(msg, f.getvalue().strip())
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create User"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update User " + obj_id + " value"))
+            self.assertFalse(HBNBCommand().onecmd("update User "
+                                                  + obj_id + " value"))
             self.assertEqual(msg, f.getvalue().strip())
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create State"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update State " + obj_id + " value"))
+            self.assertFalse(HBNBCommand().onecmd("update State "
+                                                  + obj_id + " value"))
             self.assertEqual(msg, f.getvalue().strip())
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create City"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update City " + obj_id + " value"))
+            self.assertFalse(HBNBCommand().onecmd("update City "
+                                                  + obj_id + " value"))
             self.assertEqual(msg, f.getvalue().strip())
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Amenity"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update Amenity " + obj_id + " value"))
+            self.assertFalse(HBNBCommand().onecmd("update Amenity "
+                                                  + obj_id + " value"))
             self.assertEqual(msg, f.getvalue().strip())
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Place"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update Place " + obj_id + " value"))
+            self.assertFalse(HBNBCommand().onecmd("update Place "
+                                                  + obj_id + " value"))
             self.assertEqual(msg, f.getvalue().strip())
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Review"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("update Review " + obj_id + " value"))
+            self.assertFalse(HBNBCommand().onecmd("update Review "
+                                                  + obj_id + " value"))
             self.assertEqual(msg, f.getvalue().strip())
 
     def test_update_missing_value_method(self):
@@ -1298,7 +1305,7 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
             _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "BaseModel.update('{}', 'name', 'value')".format(obj_id)
+            cmd = "BaseModel.update('{}', 'name', 'value')".format(_id)
             line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertIn("name", models.storage.all()["BaseModel." + _id].__dict__)
@@ -1306,7 +1313,7 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create User"))
             _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "User.update('{}', 'name', 'value')".format(obj_id)
+            cmd = "User.update('{}', 'name', 'value')".format(_id)
             line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertIn("name", models.storage.all()["User." + _id].__dict__)
@@ -1314,7 +1321,7 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create State"))
             _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "State.update('{}', 'name', 'value')".format(obj_id)
+            cmd = "State.update('{}', 'name', 'value')".format(_id)
             line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertIn("name", models.storage.all()["State." + _id].__dict__)
@@ -1322,7 +1329,7 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create City"))
             _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "City.update('{}', 'name', 'value')".format(obj_id)
+            cmd = "City.update('{}', 'name', 'value')".format(_id)
             line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertIn("name", models.storage.all()["City." + _id].__dict__)
@@ -1330,7 +1337,7 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create Amenity"))
             _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "Amenity.update('{}', 'name', 'value')".format(obj_id)
+            cmd = "Amenity.update('{}', 'name', 'value')".format(_id)
             line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertIn("name", models.storage.all()["Amenity." + _id].__dict__)
@@ -1338,7 +1345,7 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create Place"))
             _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "Place.update('{}', 'name', 'value')".format(obj_id)
+            cmd = "Place.update('{}', 'name', 'value')".format(_id)
             line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertIn("name", models.storage.all()["Place." + _id].__dict__)
@@ -1346,7 +1353,7 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create Review"))
             _id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "Review.update('{}', 'name', 'value')".format(obj_id)
+            cmd = "Review.update('{}', 'name', 'value')".format(_id)
             line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertIn("name", models.storage.all()["Review." + _id].__dict__)
