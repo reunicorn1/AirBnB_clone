@@ -1326,19 +1326,19 @@ class TestConsole_update(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create State"))
             _id = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "State.update('{}', 'name', 'value')".format(_id)
-            line = HBNBCommand().precmd(cmd)
-            self.assertFalse(HBNBCommand().onecmd(line))
-            self.assertIn("name", models.storage.all()["State." + _id].__dict__)
+        cmd = "State.update('{}', 'name', 'value')".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["State." + _id].__dict__
+        self.assertIn("name", attr)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create City"))
             _id = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            cmd = "City.update('{}', 'name', 'value')".format(_id)
-            line = HBNBCommand().precmd(cmd)
-            self.assertFalse(HBNBCommand().onecmd(line))
-            self.assertIn("name", models.storage.all()["City." + _id].__dict__)
+        cmd = "City.update('{}', 'name', 'value')".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["City." + _id].__dict__
+        self.assertIn("name", attr)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Amenity"))
             _id = f.getvalue().strip()
