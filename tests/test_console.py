@@ -1241,14 +1241,16 @@ class TestConsole_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create Place"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("Place.update('{}', 'name')".format(obj_id))
+            cmd = "Place.update('{}', 'name')".format(obj_id)
+            line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(msg, f.getvalue().strip())
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create Review"))
             obj_id = f.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as f:
-            line = HBNBCommand().precmd("Review.update('{}', 'name')".format(obj_id))
+            cmd = "Review.update('{}', 'name')".format(obj_id)
+            line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(msg, f.getvalue().strip())
 
