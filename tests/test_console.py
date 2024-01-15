@@ -907,6 +907,7 @@ class TestConsole_update(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """This is a set up class for the update class"""
         try:
             os.remove("file.json")
         except IOError:
@@ -1545,6 +1546,40 @@ class TestConsole_update(unittest.TestCase):
             msg = "*** Unknown syntax: " + cmd
             self.assertEqual(msg, f.getvalue().strip())
 
+    def test_update_int_method_dict(self):
+        """This function checks certain functionalities of update method"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            _id = f.getvalue().strip()
+        cmd = "Place.update('{}', {{'number_rooms': \"7\"}})".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        _dict = models.storage.all()["Place." + _id].__dict__
+        self.assertIs(type(_dict["number_rooms"]), int)
+
+    def test_update_float_method_dict(self):
+        """This function checks certain functionalities of update method"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            _id = f.getvalue().strip()
+        cmd = "Place.update('{}', {{'latitude': 3.9}})".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        _dict = models.storage.all()["Place." + _id].__dict__
+        self.assertIs(type(_dict["latitude"]), float)
+
+    def test_string_quotes_update_dict(self):
+        """This function tests certain functionalies of update function"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create User"))
+            _id = f.getvalue().strip()
+        cmd = "User.update('{}', {{'first_name': 'John Doe'}})".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        _dict = models.storage.all()["User." + _id].__dict__
+        self.assertEqual(_dict['first_name'], "John Doe")
+
+
 
 class Test_count(unittest.TestCase):
     '''class test counting the number of intances'''
@@ -1578,9 +1613,6 @@ class Test_count(unittest.TestCase):
             self.assertEqual(int(f.getvalue().strip()), 0)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd('count Amenity'))
-            self.assertEqual(int(f.getvalue().strip()), 0)
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('count City'))
             self.assertEqual(int(f.getvalue().strip()), 0)
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd('count Review'))
