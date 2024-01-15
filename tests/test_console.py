@@ -1639,7 +1639,8 @@ class Test_count(unittest.TestCase):
             self.assertEqual(int(f.getvalue().strip()), 0)
         with patch("sys.stdout", new=StringIO()) as f:
             BaseModel()
-            self.assertFalse(HBNBCommand().onecmd('count BaseModel'))
+            line = HBNBCommand().precmd('BaseModel.count()')
+            self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(int(f.getvalue().strip()), 1)
 
     def test_count_User(self):
@@ -1650,7 +1651,8 @@ class Test_count(unittest.TestCase):
             self.assertEqual(int(f.getvalue().strip()), 0)
         with patch("sys.stdout", new=StringIO()) as f:
             User()
-            self.assertFalse(HBNBCommand().onecmd('count User'))
+            line = HBNBCommand().precmd('User.count()')
+            self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(int(f.getvalue().strip()), 1)
 
     def test_count_City(self):
@@ -1661,7 +1663,8 @@ class Test_count(unittest.TestCase):
             self.assertEqual(int(f.getvalue().strip()), 0)
         with patch("sys.stdout", new=StringIO()) as f:
             City()
-            self.assertFalse(HBNBCommand().onecmd('count City'))
+            line = HBNBCommand().precmd('City.count()')
+            self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(int(f.getvalue().strip()), 1)
 
     def test_count_Amenity(self):
@@ -1672,7 +1675,8 @@ class Test_count(unittest.TestCase):
             self.assertEqual(int(f.getvalue().strip()), 0)
         with patch("sys.stdout", new=StringIO()) as f:
             Amenity()
-            self.assertFalse(HBNBCommand().onecmd('count Amenity'))
+            line = HBNBCommand().precmd('Amenity.count()')
+            self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(int(f.getvalue().strip()), 1)
 
     def test_count_State(self):
@@ -1683,7 +1687,8 @@ class Test_count(unittest.TestCase):
             self.assertEqual(int(f.getvalue().strip()), 0)
         with patch("sys.stdout", new=StringIO()) as f:
             State()
-            self.assertFalse(HBNBCommand().onecmd('count State'))
+            line = HBNBCommand().precmd('State.count()')
+            self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(int(f.getvalue().strip()), 1)
 
     def test_count_Review(self):
@@ -1694,7 +1699,8 @@ class Test_count(unittest.TestCase):
             self.assertEqual(int(f.getvalue().strip()), 0)
         with patch("sys.stdout", new=StringIO()) as f:
             Review()
-            self.assertFalse(HBNBCommand().onecmd('count Review'))
+            line = HBNBCommand().precmd('Review.count()')
+            self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(int(f.getvalue().strip()), 1)
 
     def test_count_Place(self):
@@ -1705,7 +1711,8 @@ class Test_count(unittest.TestCase):
             self.assertEqual(int(f.getvalue().strip()), 0)
         with patch("sys.stdout", new=StringIO()) as f:
             Place()
-            self.assertFalse(HBNBCommand().onecmd('count Place'))
+            line = HBNBCommand().precmd('Place.count()')
+            self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(int(f.getvalue().strip()), 1)
 
     def test_count_arg(self):
