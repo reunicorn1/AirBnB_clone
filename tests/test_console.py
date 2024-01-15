@@ -1561,29 +1561,74 @@ class Test_count(unittest.TestCase):
         '''Reset the `FileStorage.__objects`'''
         models.FileStorage._FileStorage__objects = {}
 
-    def test_count(self):
+    def test_count_zero(self):
         '''Test there's number of counting instances printed'''
-        with patch("sys.stdout", new=StringIO()) as m_out:
+        with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd('count'))
-            self.assertTrue(m_out.getvalue().strip().isnumeric())
+            self.assertTrue(f.getvalue().strip().isnumeric())
+            self.assertEqual(int(f.getvalue().strip()), 0)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('count BaseModel'))
+            self.assertEqual(int(f.getvalue().strip()), 0)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('count User'))
+            self.assertEqual(int(f.getvalue().strip()), 0)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('count City'))
+            self.assertEqual(int(f.getvalue().strip()), 0)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('count Amenity'))
+            self.assertEqual(int(f.getvalue().strip()), 0)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('count City'))
+            self.assertEqual(int(f.getvalue().strip()), 0)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('count Review'))
+            self.assertEqual(int(f.getvalue().strip()), 0)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('count State'))
+            self.assertEqual(int(f.getvalue().strip()), 0)
 
     def test_count_isntance(self):
         '''Test the count for each class'''
-        with patch("sys.stdout", new=StringIO()) as m_out:
-            self.assertFalse(HBNBCommand().onecmd('count'))
-            self.assertTrue(m_out.getvalue().strip().isnumeric())
-            self.assertEqual(int(m_out.getvalue().strip()), 0)
-        with patch("sys.stdout", new=StringIO()) as m_out:
-            from models.user import User
-            from models.city import City
-            from models.amenity import Amenity
-            from models.place import Place
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
+        from models.state import State
+        with patch("sys.stdout", new=StringIO()) as f:
+            BaseModel()
+            self.assertFalse(HBNBCommand().onecmd('count BaseModel'))
+            self.assertEqual(int(f.getvalue().strip()), 1)
+        with patch("sys.stdout", new=StringIO()) as f:
             User()
+            self.assertFalse(HBNBCommand().onecmd('count User'))
+            self.assertEqual(int(f.getvalue().strip()), 1)
+        with patch("sys.stdout", new=StringIO()) as f:
             City()
+            self.assertFalse(HBNBCommand().onecmd('count City'))
+            self.assertEqual(int(f.getvalue().strip()), 1)
+        with patch("sys.stdout", new=StringIO()) as f:
             Amenity()
+            self.assertFalse(HBNBCommand().onecmd('count Amenity'))
+            self.assertEqual(int(f.getvalue().strip()), 1)
+        with patch("sys.stdout", new=StringIO()) as f:
             Place()
+            self.assertFalse(HBNBCommand().onecmd('count City'))
+            self.assertEqual(int(f.getvalue().strip()), 1)
+        with patch("sys.stdout", new=StringIO()) as f:
+            Review()
+            self.assertFalse(HBNBCommand().onecmd('count Review'))
+            self.assertEqual(int(f.getvalue().strip()), 1)
+        with patch("sys.stdout", new=StringIO()) as f:
+            State()
+            self.assertFalse(HBNBCommand().onecmd('count State'))
+            self.assertEqual(int(f.getvalue().strip()), 1)
+        with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd('count'))
-            self.assertEqual(int(m_out.getvalue().strip()), 4)
+            self.assertEqual(int(f.getvalue().strip()), 7)
 
 
 if __name__ == '__main__':
