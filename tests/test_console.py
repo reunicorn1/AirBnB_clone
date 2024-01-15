@@ -1478,6 +1478,73 @@ class TestConsole_update(unittest.TestCase):
         attr = models.storage.all()["Review." + _id].__dict__
         self.assertIn("name", attr)
 
+    def test_update_invalid_dict(self):
+        """This function tests for the response of update to invalid dict"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
+            _id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmd = "BaseModel.update('{}', {{'first_name', 'John'}}".format(_id)
+            line = HBNBCommand().precmd(cmd)
+            self.assertFalse(HBNBCommand().onecmd(line))
+            msg = "*** Unknown syntax: " + cmd
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create User"))
+            _id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmd = "User.update('{}', {{'name', 'value'}})".format(_id)
+            line = HBNBCommand().precmd(cmd)
+            self.assertFalse(HBNBCommand().onecmd(line))
+            msg = "*** Unknown syntax: " + cmd
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create State"))
+            _id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmd = "State.update('{}', {{'name', 'value'}}".format(_id)
+            line = HBNBCommand().precmd(cmd)
+            self.assertFalse(HBNBCommand().onecmd(line))
+            attr = models.storage.all()["State." + _id].__dict__
+            msg = "*** Unknown syntax: " + cmd
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create City"))
+            _id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmd = "City.update('{}', {{'name', 'value'}}".format(_id)
+            line = HBNBCommand().precmd(cmd)
+            self.assertFalse(HBNBCommand().onecmd(line))
+            msg = "*** Unknown syntax: " + cmd
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Amenity"))
+            _id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmd = "Amenity.update('{}', {{'name', 'value'}}".format(_id)
+            line = HBNBCommand().precmd(cmd)
+            self.assertFalse(HBNBCommand().onecmd(line))
+            msg = "*** Unknown syntax: " + cmd
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            _id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmd = "Place.update('{}', {{'name', 'value'}}".format(_id)
+            line = HBNBCommand().precmd(cmd)
+            self.assertFalse(HBNBCommand().onecmd(line))
+            msg = "*** Unknown syntax: " + cmd
+            self.assertEqual(msg, f.getvalue().strip())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Review"))
+            _id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmd = "Review.update('{}', {{'name' 'value'}})".format(_id)
+            line = HBNBCommand().precmd(cmd)
+            self.assertFalse(HBNBCommand().onecmd(line))
+            msg = "*** Unknown syntax: " + cmd
+            self.assertEqual(msg, f.getvalue().strip())
+
 
 class Test_count(unittest.TestCase):
     '''class test counting the number of intances'''
