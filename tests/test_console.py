@@ -1364,6 +1364,42 @@ class TestConsole_update(unittest.TestCase):
         attr = models.storage.all()["Review." + _id].__dict__
         self.assertIn("name", attr)
 
+    def test_update_int_method(self):
+        """This function checks certain functionalities of update method"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            _id = f.getvalue().strip()
+        cmd = "update Place " + _id + " number_rooms" + " '7'"
+        self.assertFalse(HBNBCommand().onecmd(cmd))
+        _dict = models.storage.all()["Place." + _id].__dict__
+        self.assertIs(type(_dict["number_rooms"]), int)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            _id = f.getvalue().strip()
+        cmd = "Place.update('{}', 'number_rooms', \"7\")".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["Place." + _id].__dict__
+        self.assertIs(type(_dict["number_rooms"]), int)
+
+    def test_update_float_method(self):
+        """This function checks certain functionalities of update method"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            _id = f.getvalue().strip()
+        cmd = "update Place " + _id + " latitude" + " 3.9"
+        self.assertFalse(HBNBCommand().onecmd(cmd))
+        _dict = models.storage.all()["Place." + _id].__dict__
+        self.assertIs(type(_dict["latitude"]), float)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            _id = f.getvalue().strip()
+        cmd = "Place.update('{}', 'latitude', 3.9)".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        _dict = models.storage.all()["Place." + _id].__dict__
+        self.assertIs(type(_dict["latitude"]), float)
+
 
 if __name__ == '__main__':
     unittest.main()
