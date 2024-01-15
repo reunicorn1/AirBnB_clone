@@ -1370,6 +1370,7 @@ class Test_count(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         '''Remove the file at the begining of the test'''
+        models.FileStorage._FileStorage__objects = {}
         try:
             os.remove(models.FileStorage._FileStorage__file_path)
         except FileNotFoundError:
@@ -1387,14 +1388,21 @@ class Test_count(unittest.TestCase):
 
     def test_count_isntance(self):
         '''Test the count for each class'''
-        from models.user import User
-        from models.city import City
-        User()
-        City()
         with patch("sys.stdout", new=StringIO()) as m_out:
             self.assertFalse(HBNBCommand().onecmd('count'))
             self.assertTrue(m_out.getvalue().strip().isnumeric())
-            self.assertEqual(int(m_out.getvalue().strip()), 2)
+            self.assertEqual(int(m_out.getvalue().strip()), 0)
+        with patch("sys.stdout", new=StringIO()) as m_out:
+            from models.user import User
+            from models.city import City
+            from models.amenity import Amenity
+            from models.place import Place
+            User()
+            City()
+            Amenity()
+            Place()
+            self.assertFalse(HBNBCommand().onecmd('count'))
+            self.assertEqual(int(m_out.getvalue().strip()), 4)
 
 
 if __name__ == '__main__':
