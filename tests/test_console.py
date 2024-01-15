@@ -1708,6 +1708,12 @@ class Test_count(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd('count Place'))
             self.assertEqual(int(f.getvalue().strip()), 1)
 
+    def test_count_arg(self):
+        '''Invalid arg'''
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('count arg'))
+            self.assertEqual(int(f.getvalue().strip()), 0)
+
 
 if __name__ == '__main__':
     unittest.main()
