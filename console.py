@@ -41,7 +41,7 @@ class HBNBCommand(cmd.Cmd):
         cmds = [".all", ".count", ".show", ".destroy", ".update"]
         group1 = r'(?<=\.)[^(]+|[aA-zZ]+(?=\.)'
         group2 = r'(?<=\(\"|\(\')[a-z0-9\-]+'
-        group3 = r'(?<=\"|\')[\w\s\d]+|\d+(?=[\)\s]*)'
+        group3 = r'(?<=\"|\')[\w\s\d]+|\d+(?=[\)\s]+)'
         regx = group1 + '|' + group2 + '|' + group3
         if any(cmd in line for cmd in cmds):
             _dict = re.search(r'{.+}', line)
