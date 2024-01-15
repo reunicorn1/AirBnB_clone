@@ -1588,6 +1588,9 @@ class Test_count(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd('count State'))
             self.assertEqual(int(f.getvalue().strip()), 0)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('count Place'))
+            self.assertEqual(int(f.getvalue().strip()), 0)
 
     def test_count_isntance(self):
         '''Test the count for each class'''
@@ -1607,15 +1610,15 @@ class Test_count(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd('count User'))
             self.assertEqual(int(f.getvalue().strip()), 1)
         with patch("sys.stdout", new=StringIO()) as f:
-            City()
-            self.assertFalse(HBNBCommand().onecmd('count City'))
+            Place()
+            self.assertFalse(HBNBCommand().onecmd('count Place'))
             self.assertEqual(int(f.getvalue().strip()), 1)
         with patch("sys.stdout", new=StringIO()) as f:
             Amenity()
             self.assertFalse(HBNBCommand().onecmd('count Amenity'))
             self.assertEqual(int(f.getvalue().strip()), 1)
         with patch("sys.stdout", new=StringIO()) as f:
-            Place()
+            City()
             self.assertFalse(HBNBCommand().onecmd('count City'))
             self.assertEqual(int(f.getvalue().strip()), 1)
         with patch("sys.stdout", new=StringIO()) as f:
