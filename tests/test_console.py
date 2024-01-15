@@ -1403,20 +1403,81 @@ class TestConsole_update(unittest.TestCase):
     def test_string_quotes_update(self):
         """This function tests certain functionalies of update function"""
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            self.assertFalse(HBNBCommand().onecmd("create User"))
             _id = f.getvalue().strip()
         cmd = "update User " + _id + " first_name" + " 'John Doe'"
         self.assertFalse(HBNBCommand().onecmd(cmd))
-        _dict = models.storage.all()["Place." + _id].__dict__
-        self.assertIs(_dict["first_name"], "John Doe")
+        _dict = models.storage.all()["User." + _id].__dict__
+        self.assertEqual(_dict['first_name'], "John Doe")
         with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            self.assertFalse(HBNBCommand().onecmd("create User"))
             _id = f.getvalue().strip()
         cmd = "User.update('{}', 'first_name', 'John Doe')".format(_id)
         line = HBNBCommand().precmd(cmd)
         self.assertFalse(HBNBCommand().onecmd(line))
+        _dict = models.storage.all()["User." + _id].__dict__
+        self.assertEqual(_dict['first_name'], "John Doe")
+
+    def test_update_dict(self):
+        """This function tests the functionality of update with a dict
+        passed"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
+            _id = f.getvalue().strip()
+        cmd = "BaseModel.update('{}', {{'first_name': 'John'}}".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["BaseModel." + _id].__dict__
+        self.assertIn("first_name", attr)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create User"))
+            _id = f.getvalue().strip()
+        cmd = "User.update('{}', {{'name': 'value'}})".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
         attr = models.storage.all()["User." + _id].__dict__
-        self.assertIs(_dict["first_name"], "John Doe")
+        self.assertIn("name", attr)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create State"))
+            _id = f.getvalue().strip()
+        cmd = "State.update('{}', {{'name': 'value'}}".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["State." + _id].__dict__
+        self.assertIn("name", attr)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create City"))
+            _id = f.getvalue().strip()
+        cmd = "City.update('{}', {{'name': 'value'}}".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["City." + _id].__dict__
+        self.assertIn("name", attr)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Amenity"))
+            _id = f.getvalue().strip()
+        cmd = "Amenity.update('{}', {{'name': 'value'}})".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["Amenity." + _id].__dict__
+        self.assertIn("name", attr)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            _id = f.getvalue().strip()
+        cmd = "Place.update('{}', {{'name': 'value'}})".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["Place." + _id].__dict__
+        self.assertIn("name", attr)
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Review"))
+            _id = f.getvalue().strip()
+        cmd = "Review.update('{}', {{'name': 'value'}})".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["Review." + _id].__dict__
+        self.assertIn("name", attr)
+
 
 if __name__ == '__main__':
     unittest.main()
