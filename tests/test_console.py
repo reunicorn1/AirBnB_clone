@@ -227,7 +227,7 @@ class TestConsole_create(unittest.TestCase):
         self.assertIn("Amenity." + obj_id, models.storage.all().keys())
 
 
-class TestConsole_create(unittest.TestCase):
+class TestConsole_show(unittest.TestCase):
     """This class defines unittests for the create method of the console"""
 
     @classmethod
@@ -1477,6 +1477,46 @@ class TestConsole_update(unittest.TestCase):
         self.assertFalse(HBNBCommand().onecmd(line))
         attr = models.storage.all()["Review." + _id].__dict__
         self.assertIn("name", attr)
+
+
+class Test_count(unittest.TestCase):
+    '''class test counting the number of intances'''
+    @classmethod
+    def setUpClass(cls):
+        '''Remove the file at the begining of the test'''
+        models.FileStorage._FileStorage__objects = {}
+        try:
+            os.remove(models.FileStorage._FileStorage__file_path)
+        except FileNotFoundError:
+            pass
+
+    def setUp(self):
+        '''Reset the `FileStorage.__objects`'''
+        models.FileStorage._FileStorage__objects = {}
+
+    def test_count(self):
+        '''Test there's number of counting instances printed'''
+        with patch("sys.stdout", new=StringIO()) as m_out:
+            self.assertFalse(HBNBCommand().onecmd('count'))
+            self.assertTrue(m_out.getvalue().strip().isnumeric())
+
+    def test_count_isntance(self):
+        '''Test the count for each class'''
+        with patch("sys.stdout", new=StringIO()) as m_out:
+            self.assertFalse(HBNBCommand().onecmd('count'))
+            self.assertTrue(m_out.getvalue().strip().isnumeric())
+            self.assertEqual(int(m_out.getvalue().strip()), 0)
+        with patch("sys.stdout", new=StringIO()) as m_out:
+            from models.user import User
+            from models.city import City
+            from models.amenity import Amenity
+            from models.place import Place
+            User()
+            City()
+            Amenity()
+            Place()
+            self.assertFalse(HBNBCommand().onecmd('count'))
+            self.assertEqual(int(m_out.getvalue().strip()), 4)
 
 
 if __name__ == '__main__':
