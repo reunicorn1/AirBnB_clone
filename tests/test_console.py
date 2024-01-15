@@ -1400,6 +1400,23 @@ class TestConsole_update(unittest.TestCase):
         _dict = models.storage.all()["Place." + _id].__dict__
         self.assertIs(type(_dict["latitude"]), float)
 
+    def test_string_quotes_update(self):
+        """This function tests certain functionalies of update function"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            _id = f.getvalue().strip()
+        cmd = "update User " + _id + " first_name" + " 'John Doe'"
+        self.assertFalse(HBNBCommand().onecmd(cmd))
+        _dict = models.storage.all()["Place." + _id].__dict__
+        self.assertIs(_dict["first_name"], "John Doe")
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            _id = f.getvalue().strip()
+        cmd = "User.update('{}', 'first_name', 'John Doe')".format(_id)
+        line = HBNBCommand().precmd(cmd)
+        self.assertFalse(HBNBCommand().onecmd(line))
+        attr = models.storage.all()["User." + _id].__dict__
+        self.assertIs(_dict["first_name"], "John Doe")
 
 if __name__ == '__main__':
     unittest.main()
