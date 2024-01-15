@@ -136,6 +136,7 @@ class TestConsole_create(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """sets up the environment for testing"""
         try:
             os.remove("file.json")
         except IOError:
@@ -232,6 +233,7 @@ class TestConsole_show(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """sets up the environment for testing"""
         try:
             os.remove("file.json")
         except IOError:
@@ -491,6 +493,7 @@ class TestConsole_destroy(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """sets up the environement for testing"""
         try:
             os.remove("file.json")
         except IOError:
@@ -730,6 +733,7 @@ class TestConsole_all(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """sets up the environment for testing"""
         try:
             os.remove("file.json")
         except IOError:
@@ -1578,7 +1582,6 @@ class TestConsole_update(unittest.TestCase):
         self.assertFalse(HBNBCommand().onecmd(line))
         _dict = models.storage.all()["User." + _id].__dict__
         self.assertEqual(_dict['first_name'], "John Doe")
-
 
 
 class Test_count(unittest.TestCase):
