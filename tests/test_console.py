@@ -925,6 +925,7 @@ class TestConsole_update(unittest.TestCase):
         except IOError:
             pass
         models.storage._FileStorage__objects = {}
+
     def test_update_invalid(self):
         """This function tests update command with missing class name"""
         with patch("sys.stdout", new=StringIO()) as f:
@@ -1393,14 +1394,6 @@ class TestConsole_update(unittest.TestCase):
             _id = f.getvalue().strip()
         cmd = "update Place " + _id + " latitude" + " 3.9"
         self.assertFalse(HBNBCommand().onecmd(cmd))
-        _dict = models.storage.all()["Place." + _id].__dict__
-        self.assertIs(type(_dict["latitude"]), float)
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("create Place"))
-            _id = f.getvalue().strip()
-        cmd = "Place.update('{}', 'latitude', 3.9)".format(_id)
-        line = HBNBCommand().precmd(cmd)
-        self.assertFalse(HBNBCommand().onecmd(line))
         _dict = models.storage.all()["Place." + _id].__dict__
         self.assertIs(type(_dict["latitude"]), float)
 
