@@ -925,9 +925,8 @@ class TestConsole_update(unittest.TestCase):
         except IOError:
             pass
         models.storage._FileStorage__objects = {}
-"""
     def test_update_invalid(self):
-        ""This function tests update command with missing class name""
+        """This function tests update command with missing class name"""
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("update"))
             self.assertEqual("** class name missing **", f.getvalue().strip())
@@ -940,8 +939,8 @@ class TestConsole_update(unittest.TestCase):
             self.assertEqual("** class doesn't exist **", f.getvalue().strip())
 
     def test_update_instance_id_missing(self):
-        ""This function tests every possibility of recieving
-        "id missing" msg""
+        """This function tests every possibility of recieving
+        "id missing" msg"""
         msg = "** instance id missing **"
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("update BaseModel"))
@@ -994,8 +993,8 @@ class TestConsole_update(unittest.TestCase):
             self.assertEqual(msg, f.getvalue().strip())
 
     def test_update_invalid_id(self):
-        ""This function tests all the possibilities of recieving an
-        invalid id msg""
+        """This function tests all the possibilities of recieving an
+        invalid id msg"""
         msg = "** no instance found **"
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("update BaseModel 1212121"))
@@ -1048,7 +1047,7 @@ class TestConsole_update(unittest.TestCase):
             self.assertEqual("** no instance found **", f.getvalue().strip())
 
     def test_update_missing_name(self):
-        ""This function tests the functionality of the update method""
+        """This function tests the functionality of the update method"""
         msg = "** attribute name missing **"
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
@@ -1094,7 +1093,7 @@ class TestConsole_update(unittest.TestCase):
             self.assertEqual(msg, f.getvalue().strip())
 
     def test_update_missing_name_method(self):
-        ""This function tests the update method in the dot notation""
+        """This function tests the update method in the dot notation"""
         msg = "** attribute name missing **"
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
@@ -1147,7 +1146,7 @@ class TestConsole_update(unittest.TestCase):
             self.assertEqual(msg, f.getvalue().strip())
 
     def test_update_missing_value(self):
-        ""This function tests the functionality of the update method""
+        """This function tests the functionality of the update method"""
         msg = "** value missing **"
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
@@ -1200,7 +1199,7 @@ class TestConsole_update(unittest.TestCase):
             self.assertEqual(msg, f.getvalue().strip())
 
     def test_update_missing_value_method(self):
-        ""This function tests the update method in the dot notation""
+        """This function tests the update method in the dot notation"""
         msg = "** value missing **"
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
@@ -1258,7 +1257,7 @@ class TestConsole_update(unittest.TestCase):
             line = HBNBCommand().precmd(cmd)
             self.assertFalse(HBNBCommand().onecmd(line))
             self.assertEqual(msg, f.getvalue().strip())
-"""
+
     def test_update_objs(self):
         """This function tests the functionality of the update method"""
         with patch("sys.stdout", new=StringIO()) as f:
