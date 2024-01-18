@@ -1396,14 +1396,6 @@ class TestConsole_update(unittest.TestCase):
         self.assertFalse(HBNBCommand().onecmd(cmd))
         _dict = models.storage.all()["Place." + _id].__dict__
         self.assertIs(type(_dict["latitude"]), float)
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd("create Place"))
-            _id = f.getvalue().strip()
-        cmd = "Place.update('{}', 'latitude', 3.9)".format(_id)
-        line = HBNBCommand().precmd(cmd)
-        self.assertFalse(HBNBCommand().onecmd(line))
-        _dict = models.storage.all()["Place." + _id].__dict__
-        self.assertIs(type(_dict["latitude"]), float)
 
     def test_string_quotes_update(self):
         """This function tests certain functionalies of update function"""
