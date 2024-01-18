@@ -30,9 +30,7 @@ The console will be a tool to validate this storage engine as the figure:
 
 ```
 ├── AUTHORS
-├── base.py
 ├── console.py
-├── main.py
 ├── models
 │   ├── amenity.py
 │   ├── base_model.py
