@@ -26,15 +26,11 @@
     display: inline-block;
     cursor: pointer;
   }
-  .locations:hover .a
+  .locations:hover .a,
+  .amenities:hover .b
   {
     display: block;
   }
-  .amenities:hover .b
-  {
-    display: block; 
-  }
- 
   h3 {
     font-weight: 600px;
     margin-bottom: 2px;
@@ -55,6 +51,8 @@
     padding-top: 15px;
     padding-bottom: 15px;
     display: none;
+    z-index: 100;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   }
 
   .search-button {
@@ -69,7 +67,6 @@
     margin-left: 250px;
     transition: opacity 0.075s;
   }
-
   .search-button:hover {
     opacity: 0.9;
   }
@@ -81,3 +78,4 @@
   .heading-list {
     padding-left: 30px;
   }
+
